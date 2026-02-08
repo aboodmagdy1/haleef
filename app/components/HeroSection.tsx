@@ -113,8 +113,9 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[100vh] overflow-hidden flex flex-col items-center justify-center bg-[#F8FAFC]"
+      className="relative w-full h-[100vh] flex flex-col items-center justify-center bg-[#F8FAFC]"
     >
+
       {/* 0. Global Style for SplitText fixes */}
       <style jsx global>{`
         .split-word {
