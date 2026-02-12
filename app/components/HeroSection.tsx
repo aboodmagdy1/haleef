@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,12 +10,31 @@ import CreativeButton from "./CreativeButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function HeroSection() {
+export interface HeroData {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+const defaultHeroData: HeroData = {
+  title: "حليف تقني",
+  subtitle: "نبتكر حلولاً رقمية تتجاوز التوقعات، لنبني معك مستقبلاً تقنياً يخدم طموحك.",
+  ctaText: "ابدأ رحلتك معنا",
+  ctaLink: "#contact",
+};
+
+interface HeroSectionProps {
+  data?: HeroData;
+}
+
+export default function HeroSection({ data }: HeroSectionProps) {
+  const content = data || defaultHeroData;
   const containerRef = useRef<HTMLElement>(null);
   const leftArmRef = useRef<HTMLDivElement>(null);
   const rightArmRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const iconsRef = useRef<HTMLDivElement>(null);
+
   const waveLeftRef = useRef<HTMLDivElement>(null);
   const waveRightRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +45,7 @@ export default function HeroSection() {
         x: -150,
         opacity: 0,
         duration: 1,
-        delay: 0.6, // Wait for text
+        delay: 0.6,
         ease: "back.out(1.7)",
       });
 
@@ -34,7 +53,7 @@ export default function HeroSection() {
         x: 150,
         opacity: 0,
         duration: 1,
-        delay: 0.6, // Wait for text
+        delay: 0.6,
         ease: "back.out(1.7)",
       });
 
@@ -66,8 +85,7 @@ export default function HeroSection() {
         0,
       );
 
-      // Waves Animation (Parallax)
-      // Top Left moves slightly Down+Right (IN)
+      // Waves Animation
       if (waveLeftRef.current) {
         tl.to(
           waveLeftRef.current,
@@ -78,7 +96,6 @@ export default function HeroSection() {
           0,
         );
       }
-      // Bottom Right moves slightly Up+Left (IN)
       if (waveRightRef.current) {
         tl.to(
           waveRightRef.current,
@@ -89,37 +106,19 @@ export default function HeroSection() {
           0,
         );
       }
-
-      // 2. Parallax Icons
-      if (iconsRef.current) {
-        Array.from(iconsRef.current.children).forEach((icon, i) => {
-          gsap.to(icon, {
-            y: (i + 1) * -40,
-            rotation: (i % 2 === 0 ? 1 : -1) * 20,
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-        });
-      }
     },
-    { scope: containerRef },
+    { scope: containerRef, dependencies: [content] },
   );
 
   return (
     <section
+      id="home"
       ref={containerRef}
-      className="relative w-full h-[100vh] flex flex-col items-center justify-center bg-[#F8FAFC]"
+      className="relative w-full h-dvh flex flex-col items-center justify-center bg-[#F8FAFC]"
     >
-
-      {/* 0. Global Style for SplitText fixes */}
       <style jsx global>{`
         .split-word {
-          padding-bottom: 1.5rem !important; /* pb-3 equivalent */
+          padding-bottom: 1.5rem !important;
           display: inline-block;
           will-change: transform, opacity;
         }
@@ -138,14 +137,13 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {/* 2. The Horizontal Handshake */}
+      {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Top Gradient for Navbar Glass Effect */}
-        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-blue-100/40 via-blue-50/90 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-linear-to-b from-blue-100/40 via-blue-50/90 to-transparent" />
       </div>
 
       <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
-        {/* Left Arm Container (Robot) - Higher Z-Index */}
+        {/* Left Arm (Robot) */}
         <div
           ref={leftArmRef}
           className="absolute left-[-12%] md:left-[5%] w-[65vw] md:w-[45vw] h-[35vh] flex items-center justify-end z-20"
@@ -162,7 +160,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Right Arm Container (Man) - Lower Z-Index */}
+        {/* Right Arm (Man) */}
         <div
           ref={rightArmRef}
           className="absolute right-[-12%] md:right-[0%] w-[65vw] md:w-[45vw] h-[35vh] flex items-center justify-start z-10"
@@ -180,48 +178,45 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* 3. Text Content (Faster Animations) */}
+      {/* Text Content */}
       <div
         ref={titleRef}
-        className="absolute bottom-[10%] md:bottom-[4%] w-full text-center z-20 flex flex-col items-center  px-4"
+        className="absolute bottom-[10%] md:bottom-[4%] w-full text-center z-20 flex flex-col items-center px-4"
       >
-        {/* Main Title */}
         <div className="overflow-hidden">
           <SplitText
-            text="حليف تقني"
+            text={content.title}
             className="text-4xl sm:text-6xl md:text-8xl font-bold text-[#0A2463] tracking-tight inline-block drop-shadow-sm pb-2"
-            delay={0} // Immediate start
-            duration={1.3} // Faster
+            delay={0}
+            duration={1.3}
             splitType="words"
             from={{ y: 120 }}
             to={{ y: 0 }}
           />
         </div>
 
-        {/* Subtitle - Enhanced Contrast */}
-        <div className="max-w-2xl mx-auto overflow-hidden " style={{ direction: "rtl" }}>
+        <div className="max-w-2xl mx-auto overflow-hidden" style={{ direction: "rtl" }}>
           <SplitText
-            text="نبتكر حلولاً رقمية تتجاوز التوقعات، لنبني معك مستقبلاً تقنياً يخدم طموحك."
+            text={content.subtitle}
             className="text-[#0A2463] mt-2 text-sm sm:text-lg md:text-2xl font-semibold leading-relaxed inline-block"
-            delay={100} // Minimal delay
-            duration={0.5} // Faster
+            delay={100}
+            duration={0.5}
             splitType="words"
             from={{ opacity: 0, y: 30 }}
             to={{ opacity: 1, y: 0 }}
           />
         </div>
 
-        {/* CTA Button */}
         <div
-          className=" animate-fade-in-up"
+          className="animate-fade-in-up"
           style={{ animationDelay: "0.8s", opacity: 0, animationFillMode: "forwards" }}
         >
           <CreativeButton
-            text="ابدأ رحلتك معنا"
-            href="#contact"
+            text={content.ctaText}
+            href={content.ctaLink}
             variant="primary"
             size="lg"
-            reverse={true} // Inverted: Solid Blue -> White
+            reverse={true}
             className="text-lg px-12 shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40"
             icon={
               <svg
@@ -239,9 +234,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* 4. New Wave Decoration Images (Animated) */}
+      {/* Waves Decorations */}
       <div className="absolute inset-0 pointer-events-none z-30">
-        {/* Top Left Wave */}
         <div ref={waveLeftRef} className="absolute top-0 left-0 w-[40vw] md:w-[40vw] h-auto will-change-transform">
           <Image
             src="/wavetopleft.svg"
@@ -252,7 +246,6 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* Bottom Right Wave */}
         <div ref={waveRightRef} className="absolute bottom-0 right-0 w-[40vw] md:w-[40vw] h-auto will-change-transform">
           <Image
             src="/wavebottomright.svg"

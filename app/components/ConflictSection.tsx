@@ -5,41 +5,66 @@ import SplitText from "@/components/SplitText";
 import CreativeButton from "./CreativeButton";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 
-const ConflictSection: React.FC = () => {
-  // 1. طلبات العميل
-  const clientPainPoints: LogoItem[] = [
-    { node: <PainPointChip text="عايزينه زي أبل" type="client" /> },
-    { node: <PainPointChip text="ممكن نغير اللون ده؟" type="client" /> },
-    { node: <PainPointChip text="الميزانية محدودة شوية" type="client" /> },
-    { node: <PainPointChip text="خليه يفرقع (Make it Pop)" type="client" /> },
-    { node: <PainPointChip text="تعديل أخير بجد" type="client" /> },
-    { node: <PainPointChip text="الـ Deadline كان إمبارح" type="client" /> },
-    { node: <PainPointChip text="اللوجو محتاج يكبر" type="client" /> },
-    { node: <PainPointChip text="مش عاجبني الأزرق ده" type="client" /> },
-  ];
+export interface ConflictCardData {
+  title: string;
+  description: string;
+}
 
-  // 2. مشاكل المبرمج
-  const devPainPoints: LogoItem[] = [
-    { node: <PainPointChip text="الـ API واقع" type="dev" /> },
-    { node: <PainPointChip text="سباجيتي كود" type="dev" /> },
-    { node: <PainPointChip text="مفيش Documentation" type="dev" /> },
-    { node: <PainPointChip text="Merge Conflict رخم" type="dev" /> },
-    { node: <PainPointChip text="ضرب في الـ Production" type="dev" /> },
-    { node: <PainPointChip text="Memory Leak غريب" type="dev" /> },
-    { node: <PainPointChip text="الـ CSS بايظ في سفاري" type="dev" /> },
-    { node: <PainPointChip text="مش شغال عندي!" type="dev" /> },
-  ];
+export interface ConflictData {
+  title: string;
+  description: string;
+  problems: ConflictCardData[];
+  solutions: ConflictCardData[];
+}
+
+const defaultProblems: ConflictCardData[] = [
+  { title: "تأخير التسليم", description: "المشروع كان المفروض يخلص امبارح ولسه مخلصش، وكل يوم عذر جديد." },
+  { title: "انقطاع الدعم", description: "المبرمج اختفى بعد التسليم ومحدش بيرد على التليفون ولا الإيميل." },
+  { title: "سوء التواصل", description: "بنشرح في وادي والتنفيذ في وادي تاني خالص، النتيجة مش زي ما طلبنا." },
+];
+
+const defaultSolutions: ConflictCardData[] = [
+  { title: "التزام صارم بالمواعيد", description: "جدول زمني واضح وملزم. بنسلم في المعاد بالظبط، بدون أعذار." },
+  { title: "دعم فني مستمر", description: "إحنا جنبك بعد التسليم. ضمان صيانة وتطوير دائم، مش مجرد تسليم وجري." },
+  { title: "تواصل لحظي وفعال", description: "أنت معانا في الصورة خطوة بخطوة. بنفهم طلبك صح وبنفذ اللي في خيالك." },
+];
+
+interface ConflictSectionProps {
+  data?: ConflictData;
+}
+
+const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
+  const content = {
+    title: data?.title || "فجوة التواصل",
+    description:
+      data?.description || "لما الخيال بيصطدم بالواقع التقني، المشروع بيموت في النص.. إحنا هنا عشان نبني الجسر ده.",
+    problems: data?.problems || defaultProblems,
+    solutions: data?.solutions || defaultSolutions,
+  };
+
+  const problems: LogoItem[] = (content.problems || []).map((p) => ({
+    node: <DetailCard title={p.title} description={p.description} type="problem" />,
+  }));
+
+  const solutions: LogoItem[] = (content.solutions || []).map((s) => ({
+    node: <DetailCard title={s.title} description={s.description} type="solution" />,
+  }));
 
   return (
-    <section className="relative w-full  bg-slate-50 text-[#0A2463] overflow-hidden  -mt-px">
-      {/* Top Gradient Fade */}
-      {/* Top Gradient Fade */}
+    <section id="challenge" className="relative w-full bg-slate-50 text-[#0A2463] overflow-hidden -mt-px" dir="rtl">
+      <style jsx global>{`
+        .split-word {
+          padding-bottom: 0.5rem !important;
+          display: inline-block;
+          will-change: transform, opacity;
+        }
+      `}</style>
       <div
         className="absolute top-0 left-0 w-full h-40 z-10 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at top, #ffffff 0%, transparent 70%)" }}
+        style={{
+          background: "radial-gradient(ellipse at top, #ffffff 0%, transparent 70%)",
+        }}
       ></div>
-
-      {/* Wave Divider placed at the very top of ConflictSection to eat into Hero */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] transform -translate-y-[99%] z-20 pointer-events-none">
         <svg
           data-name="Layer 1"
@@ -55,7 +80,6 @@ const ConflictSection: React.FC = () => {
         </svg>
       </div>
 
-      {/* GoogleGeminiEffect at the bottom */}
       <div className="absolute -bottom-16 left-0 w-full h-[500px] pointer-events-none ">
         <GoogleGeminiEffect className="w-full h-full">
           <div className="pointer-events-auto mt-15 z-10">
@@ -70,31 +94,32 @@ const ConflictSection: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-24 pointer-events-none">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 h-[600px] items-center">
-          {/* العمود الأيمن: طلبات العميل */}
-          <div className="hidden md:block col-span-1 opacity-80 hover:opacity-100 transition-opacity duration-500 h-[600px] relative overflow-hidden mask-gradient-vertical pointer-events-auto">
-            {/* أيقونة Anchor بصرية لبداية الجسر */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-blue-100 rounded-full blur-md animate-pulse z-20"></div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 h-[700px] items-center">
+          <div className="hidden md:block col-span-1 opacity-100 hover:opacity-100 transition-opacity duration-500 h-[700px] relative overflow-hidden mask-gradient-vertical pointer-events-auto">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-red-100 rounded-full blur-md animate-pulse z-20"></div>
             <LogoLoop
-              logos={clientPainPoints}
-              speed={70}
+              logos={problems}
+              speed={50}
               direction="up"
-              logoHeight={60}
-              gap={16}
+              logoHeight={40}
+              gap={12}
               fadeOut={true}
               fadeOutColor="#f8fafc"
             />
           </div>
 
-          {/* المنتصف: المحتوى الأساسي */}
-          <div className="col-span-1 md:col-span-2 flex flex-col items-center justify-center text-center space-y-2 z-20 relative h-full">
-            {/* Glow Effect only - Text is now handled by GoogleGeminiEffect in background layer */}
+          <div className="col-span-1 md:col-span-2 flex flex-col items-center justify-center text-center z-20 relative h-full">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-white/60 blur-3xl -z-10 rounded-full"></div>
 
-            <div className="overflow-hidden relative">
+            <div className="flex items-center gap-2 mb-4 text-[#3E92CC] font-bold tracking-wider text-sm uppercase">
+              <span className="w-8 h-[2px] bg-[#3E92CC]"></span>
+              01 — التحدي
+            </div>
+
+            <div className="overflow-hidden relative mb-2">
               <SplitText
-                text="فجوة التواصل"
-                className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#3e92cc] leading-tight inline-block pb-2 drop-shadow-sm"
+                text={content.title}
+                className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#3e92cc] leading-tight inline-block drop-shadow-sm"
                 delay={0}
                 duration={1.2}
                 splitType="words"
@@ -105,7 +130,7 @@ const ConflictSection: React.FC = () => {
 
             <div className="max-w-xl mx-auto overflow-hidden">
               <SplitText
-                text="لما الخيال بيصطدم بالواقع التقني، المشروع بيموت في النص.. إحنا هنا عشان نبني الجسر ده."
+                text={content.description}
                 className="text-xl md:text-2xl text-slate-600 font-light leading-relaxed inline-block"
                 delay={100}
                 duration={0.8}
@@ -116,16 +141,14 @@ const ConflictSection: React.FC = () => {
             </div>
           </div>
 
-          {/* العمود الأيسر: واقع المبرمج */}
-          <div className="hidden md:block col-span-1 opacity-80 hover:opacity-100 transition-opacity duration-500 h-[600px] relative overflow-hidden mask-gradient-vertical">
-            {/* أيقونة Anchor بصرية لنهاية الجسر */}
-            <div className="absolute top-0 right-1/2 translate-x-1/2 w-8 h-8 bg-cyan-100 rounded-full blur-md animate-pulse z-20"></div>
+          <div className="hidden md:block col-span-1 opacity-100 hover:opacity-100 transition-opacity duration-500 h-[700px] relative overflow-hidden mask-gradient-vertical pointer-events-auto">
+            <div className="absolute top-0 right-1/2 translate-x-1/2 w-8 h-8 bg-blue-100 rounded-full blur-md animate-pulse z-20"></div>
             <LogoLoop
-              logos={devPainPoints}
-              speed={85}
+              logos={solutions}
+              speed={60}
               direction="down"
-              logoHeight={60}
-              gap={16}
+              logoHeight={40}
+              gap={12}
               fadeOut={true}
               fadeOutColor="#f8fafc"
             />
@@ -136,22 +159,27 @@ const ConflictSection: React.FC = () => {
   );
 };
 
-// الـ Chip Component
-const PainPointChip: React.FC<{ text: string; type: "client" | "dev" }> = ({ text, type }) => {
-  const isClient = type === "client";
+const DetailCard: React.FC<{ title: string; description: string; type: "problem" | "solution" }> = ({
+  title,
+  description,
+  type,
+}) => {
+  const isProblem = type === "problem";
 
   return (
     <div
       className={`
-        px-6 py-3 rounded-lg border backdrop-blur-sm whitespace-nowrap text-base font-semibold shadow-sm transform transition-all hover:scale-105
+        w-64 p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-lg
+        flex flex-col gap-2 text-right text-base
         ${
-          isClient
-            ? "bg-white/80 border-blue-100 text-blue-600 hover:border-blue-300 hover:shadow-blue-200"
-            : "bg-white/80 border-red-100 text-red-600 hover:border-red-300 hover:shadow-red-200"
+          isProblem
+            ? "bg-red-50 border-red-100 hover:border-red-200 hover:bg-red-100"
+            : "bg-blue-50 border-blue-100 hover:border-blue-200 hover:bg-blue-100"
         }
       `}
     >
-      {text}
+      <h4 className={`text-lg font-bold ${isProblem ? "text-red-700" : "text-blue-700"}`}>{title}</h4>
+      <p className="text-sm text-slate-600 leading-relaxed">{description}</p>
     </div>
   );
 };

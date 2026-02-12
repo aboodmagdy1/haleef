@@ -61,11 +61,10 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
     className,
   );
 
-  // The content (Icon + Text) reused in both layers
   const renderContent = () => (
     <>
-      {icon && <span className="transition-transform duration-300 group-hover:translate-x-1">{icon}</span>}
       <span className="tracking-wide">{text}</span>
+      {icon && <span className="transition-transform duration-300 group-hover:translate-x-1">{icon}</span>}
     </>
   );
 
