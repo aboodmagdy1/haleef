@@ -1,6 +1,8 @@
 "use client";
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useLenis } from "lenis/react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ArrowLeft } from "lucide-react";
@@ -19,6 +21,7 @@ export interface ProjectData {
   marqueeWords: string[];
   marqueeBg: string;
   stats: { label: string; value: string }[];
+  link?: string;
 }
 
 export const defaultProjects: ProjectData[] = [
@@ -67,6 +70,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
   const projects = data && data.length > 0 ? data : defaultProjects;
   const sectionRef = useRef<HTMLElement>(null);
   const pinContainerRef = useRef<HTMLDivElement>(null);
+  const lenis = useLenis();
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const desktopRefs = useRef<(HTMLDivElement | null)[]>([]);
   const phoneRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -85,96 +89,76 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
 
   useGSAP(
     () => {
-      const mm = gsap.matchMedia();
+      if (!pinContainerRef.current) return;
+      const cards = cardRefs.current.filter(Boolean);
+      if (cards.length === 0) return;
 
-      mm.add("(min-width: 1024px)", () => {
-        if (!pinContainerRef.current) return;
-        const cards = cardRefs.current.filter(Boolean);
-        if (cards.length === 0) return;
-
-        // Initial Setup: Stack cards
-        cards.forEach((card, i) => {
-          gsap.set(card, {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: i + 1,
-            y: i === 0 ? 0 : "100%",
-          });
+      // Initial Setup: Stack cards
+      cards.forEach((card, i) => {
+        gsap.set(card, {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: i + 1,
+          y: i === 0 ? 0 : "100%",
         });
+      });
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: pinContainerRef.current,
-            start: "top top",
-            end: `+=${projects.length * 45}%`,
-            pin: true,
-            scrub: 1,
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinContainerRef.current,
+          start: "top top",
+          end: `+=${projects.length * 60}%`, // Slightly longer for better mobile feel
+          pin: true,
+          scrub: 1,
+          // invalidateOnRefresh: true,
+        },
+      });
+
+      for (let i = 1; i < cards.length; i++) {
+        tl.to(cards[i], { y: 0, duration: 1, ease: "none" }, i - 1);
+      }
+
+      // Parallax mockups
+      desktopRefs.current.forEach((desktop) => {
+        if (!desktop) return;
+        gsap.fromTo(
+          desktop,
+          { x: -100, scale: 0.95 },
+          {
+            x: -30,
+            scale: 1.25,
+            ease: "none",
+            scrollTrigger: {
+              trigger: desktop.closest(".project-card"),
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
           },
-        });
-
-        for (let i = 1; i < cards.length; i++) {
-          tl.to(cards[i], { y: 0, duration: 1, ease: "none" }, i - 1);
-        }
-
-        desktopRefs.current.forEach((desktop) => {
-          if (!desktop) return;
-          gsap.fromTo(
-            desktop,
-            { x: -100, scale: 0.95 },
-            {
-              x: -30,
-              scale: 1.25,
-              ease: "none",
-              scrollTrigger: {
-                trigger: desktop.closest(".project-card"),
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-              },
-            },
-          );
-        });
-
-        phoneRefs.current.forEach((phone) => {
-          if (!phone) return;
-          gsap.fromTo(
-            phone,
-            { x: 100, scale: 0.95 },
-            {
-              x: -30,
-              scale: 1.25,
-              ease: "none",
-              scrollTrigger: {
-                trigger: phone.closest(".project-card"),
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-              },
-            },
-          );
-        });
+        );
       });
 
-      mm.add("(max-width: 1023px)", () => {
-        const cards = cardRefs.current.filter(Boolean);
-        cards.forEach((card) => {
-          gsap.set(card, {
-            position: "relative",
-            top: "auto",
-            left: "auto",
-            width: "100%",
-            height: "auto",
-            y: 0,
-            zIndex: 1,
-            clearProps: "all",
-          });
-        });
+      phoneRefs.current.forEach((phone) => {
+        if (!phone) return;
+        gsap.fromTo(
+          phone,
+          { x: 100, scale: 0.95 },
+          {
+            x: -30,
+            scale: 1.25,
+            ease: "none",
+            scrollTrigger: {
+              trigger: phone.closest(".project-card"),
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          },
+        );
       });
-
-      return () => mm.revert();
     },
     { scope: sectionRef, dependencies: [projects] },
   );
@@ -200,15 +184,20 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
       </div>
 
       {/* Pinned Container */}
-      <div ref={pinContainerRef} className="relative w-full h-auto lg:h-screen overflow-visible lg:overflow-hidden">
+      <div ref={pinContainerRef} className="relative w-full h-screen overflow-hidden">
         {projects.map((project, index) => {
-          const isDark =
-            project.bgColor.includes("0D0B1A") ||
-            project.bgColor.includes("000000") ||
-            project.bgColor.includes("0A0A") ||
-            project.bgColor.includes("0505") ||
-            project.bgColor.includes("dark") ||
-            project.bgColor.includes("black");
+          const bgColorHex = project.bgColor.match(/\[(#?[a-fA-F0-9]+)\]/)?.[1];
+
+          // Improved isDark detection for hex colors
+          const isDark = (() => {
+            if (!bgColorHex) return project.bgColor.includes("dark") || project.bgColor.includes("black");
+            const hex = bgColorHex.startsWith("#") ? bgColorHex : `#${bgColorHex}`;
+            const r = parseInt(hex.length === 4 ? hex[1] + hex[1] : hex.substring(1, 3), 16);
+            const g = parseInt(hex.length === 4 ? hex[2] + hex[2] : hex.substring(3, 5), 16);
+            const b = parseInt(hex.length === 4 ? hex[3] + hex[3] : hex.substring(5, 7), 16);
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            return brightness < 150;
+          })();
 
           return (
             <div
@@ -216,7 +205,8 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
               ref={(el) => {
                 cardRefs.current[index] = el;
               }}
-              className={`project-card relative lg:absolute inset-0 w-full h-auto lg:h-full ${project.bgColor} flex flex-col justify-start lg:justify-between overflow-hidden py-12 lg:py-0`}
+              className={`project-card absolute inset-0 w-full h-full ${project.bgColor} flex flex-col justify-start lg:justify-between overflow-hidden py-12 lg:py-0`}
+              style={{ backgroundColor: bgColorHex ?? undefined }}
             >
               {/* Top Marquee */}
               <div className="w-full z-20 relative pt-4 mb-8 lg:mb-0">
@@ -241,7 +231,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     ref={(el) => {
                       desktopRefs.current[index] = el;
                     }}
-                    className="absolute top-1/2 -translate-y-1/2 -left-[29%] md:left-[8%] lg:-left-[10%] w-[120vw] md:w-[65vw] lg:w-[65vw] aspect-video z-10 drop-shadow-2xl"
+                    className="absolute top-1/2 -translate-y-1/2 -left-[10%] md:left-[8%] lg:-left-[10%] w-[99vw] md:w-[65vw] lg:w-[65vw] aspect-video z-10 drop-shadow-2xl"
                   >
                     <Image
                       src={project.desktopMockup}
@@ -299,28 +289,20 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
 
                   {/* CTA Button */}
                   <div className="mb-10">
-                    <button
+                    <Link
+                      href={project.link || "#contact"}
+                      target={project.link ? "_blank" : "_self"}
+                      onClick={(e) => {
+                        if (!project.link && lenis) {
+                          e.preventDefault();
+                          lenis.scrollTo("#contact", { offset: -80 });
+                        }
+                      }}
                       className={`group flex items-center gap-3 px-8 py-4 rounded-full border-2 font-bold transition-all duration-300 ${isDark ? "border-white text-white hover:bg-white hover:text-black" : "border-[#0A2463] text-[#0A2463] hover:bg-[#0A2463] hover:text-white"}`}
                     >
                       مشاهدة المشروع
                       <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-
-                  {/* Stats */}
-                  <div className="flex items-center gap-8 md:gap-16 pt-8 border-t border-black/5 dark:border-white/5 w-full justify-center">
-                    {(project.stats || []).map((stat, idx) => (
-                      <div key={idx} className="text-center">
-                        <div className={`text-3xl md:text-4xl font-black ${isDark ? "text-white" : "text-[#0A2463]"}`}>
-                          {stat.value}
-                        </div>
-                        <div
-                          className={`text-xs md:text-sm font-bold uppercase tracking-wider mt-1 ${isDark ? "text-white/40" : "text-slate-400"}`}
-                        >
-                          {stat.label}
-                        </div>
-                      </div>
-                    ))}
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -24,10 +24,27 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const ContactSection = () => {
+export interface ContactData {
+  title?: string;
+  description?: string;
+  receivingEmail?: string;
+  displayEmail?: string;
+}
+
+interface ContactSectionProps {
+  data?: ContactData;
+}
+
+const ContactSection = ({ data }: ContactSectionProps) => {
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLDivElement>(null);
   const infoRef = React.useRef<HTMLDivElement>(null);
+
+  const displayTitle = data?.title || "دعنا نتحدث عن مشروعك";
+  const displayDescription =
+    data?.description || "سواء كان لديك مشروع جاهز للتنفيذ أو مجرد فكرة تود مناقشتها، خبراء حليف مستعدون لمساعدتك.";
+  const displayEmail = data?.displayEmail || "hello@haleef.sa";
+  const receivingEmail = data?.receivingEmail || "hello@haleef.sa";
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -40,8 +57,8 @@ const ContactSection = () => {
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (formData: FormValues) => {
+    console.log(`Sending to ${receivingEmail}:`, formData);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     alert("تم إرسال رسالتك بنجاح!");
     form.reset();
@@ -103,11 +120,16 @@ const ContactSection = () => {
             <span className="w-8 h-[2px] bg-[#3E92CC]"></span>
           </div>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#0A2463] mb-6 leading-tight">
-            دعنا نتحدث عن <span className="text-[#3E92CC]">مشروعك</span>
+            {displayTitle.includes("مشروعك") ? (
+              <>
+                {displayTitle.split("مشروعك")[0]}
+                <span className="text-[#3E92CC]">مشروعك</span>
+              </>
+            ) : (
+              displayTitle
+            )}
           </h2>
-          <p className="text-slate-500 text-base md:text-xl max-w-2xl mx-auto font-medium">
-            سواء كان لديك مشروع جاهز للتنفيذ أو مجرد فكرة تود مناقشتها، خبراء حليف مستعدون لمساعدتك.
-          </p>
+          <p className="text-slate-500 text-base md:text-xl max-w-2xl mx-auto font-medium">{displayDescription}</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
@@ -129,7 +151,7 @@ const ContactSection = () => {
 
             {/* Email Action */}
             <a
-              href="mailto:hello@haleef.sa"
+              href={`mailto:${displayEmail}`}
               className="group bg-slate-50/80 border border-slate-100 p-6 rounded-3xl flex items-center gap-4 hover:border-[#3E92CC]/30 hover:bg-white transition-all cursor-pointer shadow-md hover:shadow-xl"
             >
               <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#3E92CC] group-hover:bg-[#3E92CC] group-hover:text-white transition-all shadow-sm group-hover:shadow-lg">
@@ -139,7 +161,7 @@ const ContactSection = () => {
                 <h4 className="font-bold text-[#0A2463] mb-1 group-hover:text-[#3E92CC] transition-colors">
                   راسلنا عبر البريد
                 </h4>
-                <p className="text-slate-500 text-sm font-medium">hello@haleef.sa</p>
+                <p className="text-slate-500 text-sm font-medium">{displayEmail}</p>
               </div>
             </a>
 

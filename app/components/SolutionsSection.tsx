@@ -105,30 +105,33 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
 
   useGSAP(
     () => {
-      // Entrance Animation
-      gsap.fromTo(
-        leftContentRef.current,
-        { opacity: 0, x: 50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          delay: 0.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top center",
-          },
-        },
-      );
+      if (!pinContainerRef.current || !cardsContainerRef.current) return;
+      const cards = cardRefs.current.filter((el) => el !== null);
+      if (cards.length === 0) return;
 
       const mm = gsap.matchMedia();
 
-      // Desktop: Apply stacking and pinning
+      // ===========================
+      // 🖥️ DESKTOP ANIMATION (Pinning & Stacking)
+      // ===========================
       mm.add("(min-width: 1024px)", () => {
-        if (!pinContainerRef.current || !cardsContainerRef.current) return;
-        const cards = cardRefs.current.filter((el) => el !== null);
-        if (cards.length === 0) return;
+        // 1. Left Content Entrance
+        gsap.fromTo(
+          leftContentRef.current,
+          { opacity: 0, x: 50 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            delay: 0.2,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top center",
+            },
+          },
+        );
 
+        // 2. Card Calculations
         const gap = 40;
         const positions: number[] = [];
         let currentY = 0;
@@ -141,6 +144,7 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
         const maxCardHeight = Math.max(...cards.map((c) => (c as HTMLElement).offsetHeight));
         gsap.set(cardsContainerRef.current, { height: maxCardHeight + gap });
 
+        // Set initial state for stacking
         cards.forEach((card, i) => {
           gsap.set(card, {
             y: positions[i],
@@ -152,8 +156,10 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
           });
         });
 
+        // 3. Marquee Entrance
         gsap.set(marqueeContainerRef.current, { y: 200, opacity: 0 });
 
+        // 4. The Pinning Timeline
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: pinContainerRef.current,
@@ -164,6 +170,7 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
           },
         });
 
+        // Animate cards stacking up
         for (let i = 1; i < cards.length; i++) {
           tl.to(cards[i], { y: 0, duration: 1, ease: "none" }, i - 1);
           for (let j = i + 1; j < cards.length; j++) {
@@ -171,11 +178,47 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
           }
         }
 
-        tl.to(marqueeContainerRef.current, { y: -100, opacity: 1, duration: 1, ease: "power2.out" }, ">");
+        tl.to(marqueeContainerRef.current, { y: -30, opacity: 1, duration: 1, ease: "power2.out" }, ">");
       });
 
-      // Mobile: No GSAP manipulation needed - let CSS handle it
-      // Cards are already in normal flow by default
+      // ===========================
+      // 📱 MOBILE ANIMATION (Natural Scroll - No Pinning)
+      // ===========================
+      mm.add("(max-width: 1023px)", () => {
+        // Ensure container has auto height for natural flow
+        gsap.set(cardsContainerRef.current, { height: "auto" });
+        gsap.set(leftContentRef.current, { opacity: 1, x: 0 });
+
+        // Reset cards to natural layout (relative)
+        cards.forEach((card) => {
+          gsap.set(card, {
+            position: "relative",
+            top: "auto",
+            left: "auto",
+            y: 0,
+            zIndex: 1,
+            width: "100%",
+          });
+        });
+
+        // Simple fade-up animation for each card as you scroll
+        cards.forEach((card) => {
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%", // Triggers when top of card hits 85% of viewport
+              },
+            },
+          );
+        });
+      });
 
       return () => mm.revert();
     },
@@ -183,11 +226,17 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
   );
 
   return (
-    <section id="services" ref={sectionRef} className="relative bg-white text-slate-900 lg:-mt-32 z-10 overflow-hidden">
+    <section
+      id="services"
+      ref={sectionRef}
+      className="relative bg-white -mt-80 lg:-mt-32 text-slate-900 z-10 overflow-hidden pt-10 lg:pt-0"
+    >
       <div className="">
-        <div ref={pinContainerRef} className="relative w-full min-h-screen lg:h-screen flex flex-col justify-center">
-          <div className="grid grid-cols-1 container mx-auto px-6 md:px-8 lg:grid-cols-2 w-full items-center grow gap-4 lg:gap-0">
-            <div className="flex flex-col justify-center pt-24 pb-12 lg:py-0 order-1">
+        {/* On Mobile: auto height. On Desktop: h-screen for pinning */}
+        <div ref={pinContainerRef} className="relative w-full h-auto lg:h-screen flex flex-col justify-center">
+          <div className="grid grid-cols-1 container mx-auto px-6 md:px-8 lg:grid-cols-2 w-full items-start lg:items-center grow gap-8 lg:gap-0">
+            {/* Left Side: Text */}
+            <div className="flex flex-col justify-center lg:py-0 order-1">
               <div ref={leftContentRef}>
                 <div className="border-r-2 md:border-r-4 border-blue-600 pr-4 md:pr-6 mb-6 md:mb-8">
                   <div className="flex items-center gap-2 mb-2 text-blue-600 font-bold tracking-wider text-xs md:text-sm uppercase">
@@ -212,32 +261,37 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
                     variant="secondary"
                     reverse={true}
                     size="lg"
+                    href="#contact"
                     className="w-full md:w-auto"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-center order-2">
-              <div ref={cardsContainerRef} className="relative w-full max-w-xl">
+            {/* Right Side: Cards */}
+            <div className="flex items-center justify-center order-2 pb-10 lg:pb-0">
+              <div ref={cardsContainerRef} className="relative w-full max-w-xl flex flex-col gap-6 lg:block">
                 {services.map((service, index) => (
                   <div
                     key={service.id || index}
                     ref={(el) => {
                       cardRefs.current[index] = el;
                     }}
-                    className={`service-card lg:my-0 my-5 w-full p-8 md:p-10 rounded-3xl border-2 shadow-2xl flex flex-col gap-5 ${service.bg} ${service.border}`}
+                    className={`service-card w-full p-6 md:p-10 rounded-3xl border-2 shadow-xl flex flex-col gap-5 ${service.bg} ${service.border}`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm shrink-0">
-                        {getIcon(service.iconName, `w-8 h-8 ${service.text.replace("text-", "text-")}`)}
+                      <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm shrink-0">
+                        {getIcon(service.iconName, `w-6 h-6 md:w-8 md:h-8 ${service.text}`)}
                       </div>
-                      <h3 className={`text-2xl md:text-3xl font-bold ${service.text}`}>{service.title}</h3>
+                      <h3 className={`text-xl md:text-3xl font-bold ${service.text}`}>{service.title}</h3>
                     </div>
-                    <p className="text-slate-600 text-lg leading-relaxed">{service.description}</p>
+                    <p className="text-slate-600 text-base md:text-lg leading-relaxed">{service.description}</p>
                     <ul className="flex flex-col gap-2">
                       {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-slate-700 font-medium">
+                        <li
+                          key={idx}
+                          className="flex items-center gap-3 text-slate-700 font-medium text-sm md:text-base"
+                        >
                           <span className={`w-2 h-2 rounded-full ${service.dot} shrink-0`}></span>
                           {feature}
                         </li>
@@ -249,8 +303,8 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
             </div>
           </div>
 
-          <div ref={marqueeContainerRef} className="relative w-full mt-auto">
-            <div className="pb-10">
+          <div ref={marqueeContainerRef} className="relative w-full lg:absolute lg:bottom-0 lg:left-0">
+            <div className="pb-10 lg:pb-10">
               <InfiniteMarquee
                 textArr={["مشاريعنا", "أعمالنا", "إبداعنا", "إنجازاتنا"]}
                 bg="bg-gradient-to-r from-[#3E92CC] to-[#0A2463]"

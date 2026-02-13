@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useLenis } from "lenis/react";
 
 // Utility for merging tailwind classes safely
 function cn(...inputs: ClassValue[]) {
@@ -30,6 +31,8 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
   reverse = false, // Default false
   ...props
 }) => {
+  const lenis = useLenis();
+
   // Size Variants
   const sizeClasses = {
     sm: "px-6 py-2 text-sm",
@@ -50,6 +53,18 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
       ? "bg-white text-[#3E92CC]" // Reverse Hover: White BG, Blue Text
       : "bg-linear-to-r from-[#3E92CC] to-[#2563EB] text-white", // Normal Hover: Blue Gradient, White Text
     secondary: reverse ? "bg-white text-[#0A2463]" : "bg-linear-to-r from-[#0A2463] to-[#1e3a8a] text-white",
+  };
+
+  const handleSmoothScroll = (e: React.MouseEvent) => {
+    if (href?.startsWith("#") && lenis) {
+      e.preventDefault();
+      lenis.scrollTo(href, {
+        offset: -80,
+        duration: 2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    }
+    if (onClick) onClick(e as any);
   };
 
   const baseClasses = cn(
@@ -90,14 +105,14 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
 
   if (href) {
     return (
-      <Link href={href} className={baseClasses} role="button" {...(props as any)}>
+      <Link href={href} onClick={handleSmoothScroll} className={baseClasses} role="button" {...(props as any)}>
         {buttonContent}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className={baseClasses} {...props}>
+    <button type={type} onClick={handleSmoothScroll} className={baseClasses} {...props}>
       {buttonContent}
     </button>
   );

@@ -81,8 +81,9 @@ export default function FloatingNav() {
 
   const navItems = [
     { label: "الرئيسية", href: "#home" },
-    { label: "الحلول", href: "#services" },
-    { label: "عنا", href: "#about" },
+    { label: "الخدمات", href: "#services" },
+    { label: "أعمالنا", href: "#projects" },
+    { label: "من نحن", href: "#about" },
     { label: "تواصل معنا", href: "#contact" },
   ];
 

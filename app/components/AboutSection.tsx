@@ -119,24 +119,28 @@ const AboutSection = ({ data }: AboutSectionProps) => {
       <div className="absolute bottom-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-50/40 rounded-full blur-[80px] md:blur-[120px] pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col items-center">
-        <div className="max-w-4xl text-center mb-12 md:mb-20 flex flex-col items-center">
-          <div className="flex items-center gap-2 text-[#3E92CC] font-bold tracking-wider text-sm uppercase mb-6">
-            <span className="w-8 h-[2px] bg-[#3E92CC]"></span>
+        <div className="max-w-4xl text-center mb-16 md:mb-24 flex flex-col items-center">
+          <div className="flex items-center gap-3 text-[#3E92CC] font-bold tracking-widest text-xs md:text-sm uppercase mb-6 bg-blue-50 px-4 py-1.5 rounded-full border border-blue-100 shadow-sm">
+            <span className="w-6 h-[2px] bg-[#3E92CC]"></span>
             {content.subtitle}
-            <span className="w-8 h-[2px] bg-[#3E92CC]"></span>
+            <span className="w-6 h-[2px] bg-[#3E92CC]"></span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-black leading-tight mb-4 text-[#0A2463]">
+          <h2 className="text-4xl md:text-6xl font-black leading-tight mb-6 text-[#0A2463] text-balance">
             {content.title.includes("فكرتك") ? (
-              <>
-                {content.title.split("فكرتك")[0]} <span className="text-[#3E92CC]">فكرتك</span>{" "}
-                {content.title.split("فكرتك")[1]}
-              </>
+              <div className="flex flex-wrap justify-center gap-x-3">
+                <span>{content.title.split("فكرتك")[0]}</span>
+                <span className="text-[#3E92CC] relative inline-block">
+                  فكرتك
+                  <span className="absolute -bottom-2 left-0 w-full h-1 bg-[#3E92CC]/20 rounded-full"></span>
+                </span>
+                <span>{content.title.split("فكرتك")[1]}</span>
+              </div>
             ) : (
               content.title
             )}
           </h2>
-          <p className="text-slate-500 text-base md:text-xl max-w-2xl">{content.description}</p>
+          <p className="text-slate-500 text-lg md:text-2xl max-w-2xl leading-relaxed">{content.description}</p>
         </div>
 
         <div className="relative w-full max-w-6xl">
@@ -144,36 +148,46 @@ const AboutSection = ({ data }: AboutSectionProps) => {
             <div ref={lineRef} className="absolute inset-0 bg-[#3E92CC] w-full h-full origin-right scale-x-0"></div>
           </div>
 
-          <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 relative z-10">
+          <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 relative z-10">
             {content.steps.map((step, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center group">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white border-2 md:border-4 border-[#3E92CC] flex items-center justify-center text-lg md:text-xl font-bold text-[#3E92CC] mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform duration-300 z-10 relative">
-                  {idx + 1}
+              <div key={idx} className="flex flex-col items-center text-center group relative">
+                {/* Connecting Line for Mobile */}
+                {idx < content.steps.length - 1 && (
+                  <div className="lg:hidden absolute top-20 -bottom-16 left-1/2 -translate-x-1/2 w-[2px] bg-linear-to-b from-[#3E92CC] to-transparent z-0 opacity-20"></div>
+                )}
+
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white border-2 border-[#3E92CC] flex items-center justify-center text-xl md:text-2xl font-black text-[#3E92CC] mb-8 shadow-[0_10px_30px_rgba(62,146,204,0.15)] group-hover:bg-[#3E92CC] group-hover:text-white transition-all duration-500 z-10 relative rotate-45 group-hover:rotate-0">
+                  <span className="-rotate-45 group-hover:rotate-0 transition-transform duration-500">{idx + 1}</span>
                 </div>
 
-                <div className="w-full bg-white border border-slate-100 rounded-3xl p-6 md:p-8 hover:shadow-xl hover:border-[#3E92CC]/20 transition-all duration-300 transform hover:-translate-y-2 shadow-sm">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-[#3E92CC]/10 flex items-center justify-center mb-6 mx-auto group-hover:bg-[#3E92CC] transition-all duration-300">
-                    {getIcon(
-                      step.icon,
-                      "w-6 h-6 md:w-8 md:h-8 text-[#3E92CC] group-hover:text-white transition-colors duration-300",
-                    )}
+                <div className="w-full bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-10 hover:shadow-2xl hover:border-[#3E92CC]/20 transition-all duration-500 transform hover:-translate-y-3 shadow-sm relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-24 h-24 bg-[#3E92CC]/5 rounded-br-full -translate-x-12 -translate-y-12"></div>
+
+                  <div className="w-16 h-16 rounded-2xl bg-[#3E92CC]/10 flex items-center justify-center mb-8 mx-auto group-hover:scale-110 transition-transform duration-500">
+                    {getIcon(step.icon, "w-8 h-8 text-[#3E92CC] transition-colors duration-300")}
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-4 text-[#0A2463]">{step.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm md:text-base">{step.description}</p>
+                  <h3 className="text-2xl font-black mb-4 text-[#0A2463]">{step.title}</h3>
+                  <p className="text-slate-500 leading-relaxed text-base">{step.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="relative w-full max-w-6xl lg:h-130 lg:aspect-auto aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl mt-10 border border-slate-200">
+        <div className="relative w-full max-w-6xl h-[350px] md:h-[500px] rounded-4xl md:rounded-[3rem] overflow-hidden shadow-2xl mt-20 border border-white/20 group">
           <Image
             src={content.image}
             alt="About Haleef Team"
             fill
-            className="object-cover hover:scale-105 transition-transform duration-700"
+            className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
+            priority
           />
-          <div className="absolute inset-0 bg-linear-to-t from-[#0A2463]/80 via-transparent to-transparent opacity-40"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-[#0A2463]/60 via-transparent to-transparent opacity-80"></div>
+          <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl">
+              <p className="text-white font-bold text-lg md:text-xl">فريق حليف - نصنع الفرق</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

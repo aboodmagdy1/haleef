@@ -14,6 +14,7 @@
 
   --color-text-main: var(--text-main);
   --color-text-muted: var(--text-muted);
+  --color-destructive: #ef4444;
 }
 
 :root {
@@ -25,6 +26,7 @@
   --primary: #3e92cc; /* Electric Blue */
   --secondary: #0a2463; /* Deep Space Blue */
   --accent: #adb0b4; /* Silver Metallic */
+  --destructive: #ef4444; /* Red for errors */
 
   /* Text Colors */
   --text-main: #0a2463; /* Deep Space Blue */

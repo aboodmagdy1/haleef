@@ -20,16 +20,33 @@ const InfiniteMarquee: React.FC<InfiniteMarqueeProps> = ({
   rotate = -3,
   separator = "✦",
   className = "",
-  fontSize = "text-5xl md:text-7xl",
+  fontSize = "text-3xl md:text-7xl",
 }) => {
-  // Repeat the text array enough times to fill the screen
+  // Handle dynamic background colors/gradients for Tailwind 4 / Dynamic classes
+  const fromColor = bg.match(/from-\[#?([a-fA-F0-9]+)\]/)?.[1];
+  const toColor = bg.match(/to-\[#?([a-fA-F0-9]+)\]/)?.[1];
+  const solidColor = bg.match(/bg-\[#?([a-fA-F0-9]+)\]/)?.[1];
+
+  const dynamicBgStyle =
+    fromColor && toColor
+      ? { backgroundImage: `linear-gradient(to right, #${fromColor}, #${toColor})` }
+      : solidColor
+        ? { backgroundColor: `#${solidColor}` }
+        : {};
+
   const repeatedItems = [...textArr, ...textArr, ...textArr, ...textArr];
 
   return (
     <div
       dir="ltr"
-      className={`relative w-full overflow-hidden py-6 md:py-8 ${bg} ${className}`}
-      style={{ transform: `rotate(${rotate}deg)`, marginLeft: "-2%", marginRight: "-2%", width: "104%" }}
+      className={`relative w-full overflow-hidden py-3 md:py-8 ${bg} ${className}`}
+      style={{
+        ...dynamicBgStyle,
+        transform: `rotate(${rotate}deg)`,
+        marginLeft: "-2%",
+        marginRight: "-2%",
+        width: "104%",
+      }}
     >
       <div className="flex whitespace-nowrap animate-marquee" style={{ animationDuration: `${speed}s` }}>
         {repeatedItems.map((text, i) => (

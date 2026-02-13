@@ -12,7 +12,8 @@ export const projectsQuery = groq`*[_type == "project"]{
   badges,
   marqueeWords,
   marqueeBg,
-  stats
+  stats,
+  link
 }`;
 
 export const servicesQuery = groq`*[_type == "service"]{
@@ -60,4 +61,12 @@ export const footerQuery = groq`*[_type == "footer"][0]{
   email,
   socialLinks,
   workingHours
+}`;
+
+export const contactQuery = groq`*[_type == "contact"][0]{
+  _id,
+  title,
+  description,
+  receivingEmail,
+  displayEmail
 }`;

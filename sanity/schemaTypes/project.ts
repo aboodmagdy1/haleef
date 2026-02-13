@@ -83,5 +83,10 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: "link",
+      title: "Project Link (URL)",
+      type: "url",
+    }),
   ],
 });
