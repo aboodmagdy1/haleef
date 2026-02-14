@@ -59,6 +59,8 @@ export const footerQuery = groq`*[_type == "footer"][0]{
   navLinks,
   location,
   email,
+  phone,
+  crNumber,
   socialLinks,
   workingHours
 }`;

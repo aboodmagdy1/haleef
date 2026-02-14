@@ -36,6 +36,16 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "phone",
+      title: "Phone Number",
+      type: "string",
+    }),
+    defineField({
+      name: "crNumber",
+      title: "Commercial Registration Number (رقم السجل التجاري)",
+      type: "string",
+    }),
+    defineField({
       name: "socialLinks",
       title: "Social Links",
       type: "array",
