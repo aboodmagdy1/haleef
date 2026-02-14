@@ -72,3 +72,8 @@ export const contactQuery = groq`*[_type == "contact"][0]{
   receivingEmail,
   displayEmail
 }`;
+
+export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
+  _id,
+  "logoUrl": logo.asset->url
+}`;

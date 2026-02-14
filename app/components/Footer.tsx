@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, MapPin, Github, Linkedin, Twitter, Instagram, Phone, FileText } from "lucide-react";
 import { useLenis } from "lenis/react";
 
@@ -69,9 +70,10 @@ const getSocialIcon = (platform: string) => {
 
 interface FooterProps {
   data?: FooterData;
+  logoUrl?: string | null;
 }
 
-const Footer = ({ data }: FooterProps) => {
+const Footer = ({ data, logoUrl }: FooterProps) => {
   const content = data || defaultFooterData;
   const lenis = useLenis();
 
@@ -110,10 +112,20 @@ const Footer = ({ data }: FooterProps) => {
           {/* Logo & Slogan */}
           <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block group">
-              <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-[#0A2463] group-hover:text-[#3E92CC] transition-colors duration-300">
-                حليف
-                <span className="text-[#3E92CC]">.</span>
-              </h2>
+              {logoUrl ? (
+                <Image
+                  src={logoUrl}
+                  alt="حليف"
+                  width={120}
+                  height={48}
+                  className="h-10 md:h-14 w-auto object-contain"
+                />
+              ) : (
+                <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-[#0A2463] group-hover:text-[#3E92CC] transition-colors duration-300">
+                  حليف
+                  <span className="text-[#3E92CC]">.</span>
+                </h2>
+              )}
             </Link>
             <div className="text-lg md:text-2xl font-bold text-slate-400 leading-tight flex flex-wrap gap-x-4 gap-y-1">
               {content.slogan.map((line, i) => (
