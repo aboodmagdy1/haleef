@@ -86,7 +86,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
   return (
     <section
       id="challenge"
-      className="relative w-full lg:min-h-fit min-h-screen bg-slate-50 text-[#0A2463] overflow-hidden -mt-px"
+      className="relative w-full lg:min-h-fit min-h-[115vh] bg-slate-50 text-[#0A2463] overflow-hidden -mt-px"
       dir="rtl"
     >
       <style jsx global>{`
@@ -151,16 +151,28 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
         </div>
 
         {/* ================= MOBILE LAYOUT (Stack) ================= */}
-        <div className="flex md:hidden flex-col pb-24 pt-4">
-          {/* 1. Header Text - First for Context */}
-          <div className="relative z-20 pointer-events-auto mb-10">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[120%] bg-white/60 blur-3xl -z-10 rounded-full"></div>
+        <div className="flex md:hidden flex-col items-center pb-24 pt-4 relative">
+          {/* 1. Problems Loop - Red */}
+          <div dir="ltr" className="w-full relative py-2 pointer-events-auto mb-2">
+            <LogoLoop logos={problems} speed={30} direction="left" gap={16} className="py-2" />
+          </div>
+
+          {/* Vertical Line Connection (Between Problems and Gap) */}
+          <div className="flex flex-col items-center opacity-40">
+            <div className="w-2 h-2 bg-red-400 rounded-full mb-1"></div>
+            <div className="w-[2px] h-20 bg-linear-to-b from-red-400 to-[#3E92CC]"></div>
+          </div>
+
+          {/* 2. Header Text - The Gap (The Bridge) */}
+          <div className="relative z-20 pointer-events-auto py-4">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[120%] bg-white/40 blur-3xl -z-10 rounded-full"></div>
             <HeaderContent title={content.title} description={content.description} />
           </div>
 
-          {/* 2. Problems Loop - Red */}
-          <div dir="ltr" className="w-full relative py-2 pointer-events-auto mb-6">
-            <LogoLoop logos={problems} speed={30} direction="left" gap={16} className="py-2" />
+          {/* Vertical Line Connection (Between Gap and Solutions) */}
+          <div className="flex flex-col items-center opacity-40">
+            <div className="w-[2px] h-20 bg-linear-to-b from-[#3E92CC] to-blue-400"></div>
+            <div className="w-2 h-2 bg-blue-400 rounded-full mt-1"></div>
           </div>
 
           {/* 3. Solutions Loop - Blue */}

@@ -3,7 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, MessageCircle, Calendar, Send } from "lucide-react";
+import { Mail, MessageCircle, Calendar, Send, CheckCircle2 } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -43,8 +45,9 @@ const ContactSection = ({ data }: ContactSectionProps) => {
   const displayTitle = data?.title || "دعنا نتحدث عن مشروعك";
   const displayDescription =
     data?.description || "سواء كان لديك مشروع جاهز للتنفيذ أو مجرد فكرة تود مناقشتها، خبراء حليف مستعدون لمساعدتك.";
-  const displayEmail = data?.displayEmail || "hello@haleef.sa";
-  const receivingEmail = data?.receivingEmail || "hello@haleef.sa";
+  const displayEmail = data?.displayEmail || "haleeftech.cs@gmail.com";
+  const receivingEmail = data?.receivingEmail || "haleeftech.cs@gmail.com";
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -58,10 +61,39 @@ const ContactSection = ({ data }: ContactSectionProps) => {
   });
 
   const onSubmit = async (formData: FormValues) => {
-    console.log(`Sending to ${receivingEmail}:`, formData);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    alert("تم إرسال رسالتك بنجاح!");
-    form.reset();
+    const toastId = toast.loading("جاري إرسال رسالتك...");
+    try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
+
+      if (!serviceId || !templateId || !publicKey) {
+        console.warn("EmailJS configuration is missing. Falling back to console log.");
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        toast.info("تمت المحاكاة: الإعدادات غير مكتملة بعد", { id: toastId });
+      } else {
+        await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            from_name: `${formData.firstName} ${formData.lastName}`,
+            from_email: formData.email,
+            company: formData.company || "N/A",
+            message: formData.message,
+            to_email: receivingEmail,
+          },
+          publicKey,
+        );
+        toast.success("تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.", { id: toastId });
+      }
+
+      setIsSuccess(true);
+      form.reset();
+      setTimeout(() => setIsSuccess(false), 5000);
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      toast.error("عذراً، حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.", { id: toastId });
+    }
   };
 
   useGSAP(
@@ -284,12 +316,26 @@ const ContactSection = ({ data }: ContactSectionProps) => {
 
                   <Button
                     type="submit"
-                    disabled={form.formState.isSubmitting}
-                    className="w-full h-14 md:h-16 bg-[#3E92CC] hover:bg-[#0A2463] text-white font-black rounded-2xl transition-all shadow-xl hover:shadow-[#3E92CC]/40 gap-3 text-xl hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:translate-y-0"
+                    disabled={form.formState.isSubmitting || isSuccess}
+                    className={cn(
+                      "w-full h-14 md:h-16 font-black rounded-2xl transition-all shadow-xl gap-3 text-xl hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:translate-y-0",
+                      isSuccess
+                        ? "bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-200"
+                        : "bg-[#3E92CC] hover:bg-[#0A2463] text-white shadow-[#3E92CC]/40",
+                    )}
                   >
-                    {form.formState.isSubmitting ? "جاري الإرسال..." : "ابدأ الآن"}
-                    {!form.formState.isSubmitting && (
-                      <Send className="w-6 h-6 group-hover:-translate-x-1 group-hover:translate-y-[-2px] transition-transform" />
+                    {form.formState.isSubmitting ? (
+                      "جاري الإرسال..."
+                    ) : isSuccess ? (
+                      <>
+                        تم الإرسال بنجاح
+                        <CheckCircle2 className="w-6 h-6" />
+                      </>
+                    ) : (
+                      <>
+                        ابدأ الآن
+                        <Send className="w-6 h-6 group-hover:-translate-x-1 group-hover:translate-y-[-2px] transition-transform" />
+                      </>
                     )}
                   </Button>
                 </form>
