@@ -58,10 +58,10 @@ const ConvergenceSection = () => {
 
         const x = (star.x / star.z) * width + width / 2;
         const y = (star.y / star.z) * height + height / 2;
-        const size = (1 - star.z / width) * 3;
+        const size = Math.max(0, (1 - star.z / width) * 3);
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${1 - star.z / width})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, 1 - star.z / width)})`;
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
       });

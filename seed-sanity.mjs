@@ -77,7 +77,7 @@ const footerData = {
     { label: "أعمالنا", href: "#" },
     { label: "تواصل معنا", href: "#" },
   ],
-  location: "الرياض، المملكة العربية السعودية - متاح عن بعد",
+  location: "المدينة المنورة ، المملكة العربية السعودية - متاح عن بعد",
   email: "hello@haleef.sa",
   socialLinks: [
     { platform: "Github", href: "#" },

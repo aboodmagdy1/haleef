@@ -67,7 +67,7 @@ export default async function Home() {
       <ProjectsSection data={projects} />
       <AboutSection data={about} />
       <ContactSection data={contact} />
-      <Footer />
+      <Footer data={footer} />
     </main>
   );
 }
