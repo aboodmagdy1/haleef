@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import FloatingNav from "./components/FloatingNav";
+import { client } from "@/sanity/lib/client";
+import { siteSettingsQuery } from "@/sanity/lib/queries";
 
 import { Toaster } from "sonner";
 
@@ -16,16 +18,24 @@ export const metadata: Metadata = {
   description: "Next-gen Arabic Tech Landing Page",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let logoUrl: string | null = null;
+  try {
+    const settings = await client.fetch(siteSettingsQuery);
+    logoUrl = settings?.logoUrl || null;
+  } catch (e) {
+    console.error("Failed to fetch site settings:", e);
+  }
+
   return (
     <html lang="ar" dir="rtl">
       <body className={`${ibmPlexArabic.className} antialiased bg-background text-text-main`}>
         <Toaster position="bottom-left" richColors />
-        <FloatingNav />
+        <FloatingNav logoUrl={logoUrl} />
         {children}
       </body>
     </html>

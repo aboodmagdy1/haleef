@@ -59,6 +59,8 @@ export const footerQuery = groq`*[_type == "footer"][0]{
   navLinks,
   location,
   email,
+  phone,
+  crNumber,
   socialLinks,
   workingHours
 }`;
@@ -69,4 +71,9 @@ export const contactQuery = groq`*[_type == "contact"][0]{
   description,
   receivingEmail,
   displayEmail
+}`;
+
+export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
+  _id,
+  "logoUrl": logo.asset->url
 }`;

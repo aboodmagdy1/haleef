@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
@@ -13,7 +14,7 @@ import CreativeButton from "./CreativeButton";
  * A premium, glass-morphic capsule navigation bar.
  * Stays fixed at the top, floats gently with zero-gravity effect.
  */
-export default function FloatingNav() {
+export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const menuOverlayRef = useRef<HTMLDivElement>(null);
@@ -108,9 +109,21 @@ export default function FloatingNav() {
             <Link
               href="#home"
               onClick={(e) => handleScroll(e, "#home")}
-              className="text-xl md:text-2xl font-bold tracking-tighter text-[#0A2463]"
+              className="flex items-center"
             >
-              HALEIF
+              {logoUrl ? (
+                <Image
+                  src={logoUrl}
+                  alt="HALEIF"
+                  width={100}
+                  height={36}
+                  className="h-6 md:h-8 w-auto object-contain"
+                />
+              ) : (
+                <span className="text-xl md:text-2xl font-bold tracking-tighter text-[#0A2463]">
+                  HALEIF
+                </span>
+              )}
             </Link>
           </div>
 
@@ -171,7 +184,19 @@ export default function FloatingNav() {
           onClick={(e: any) => handleScroll(e, "#contact")}
         />
 
-        <div className="mt-8 text-white/40 font-bold tracking-widest text-xl">HALEIF</div>
+        <div className="mt-8">
+          {logoUrl ? (
+            <Image
+              src={logoUrl}
+              alt="HALEIF"
+              width={120}
+              height={40}
+              className="h-8 w-auto object-contain opacity-40"
+            />
+          ) : (
+            <span className="text-white/40 font-bold tracking-widest text-xl">HALEIF</span>
+          )}
+        </div>
       </div>
     </>
   );

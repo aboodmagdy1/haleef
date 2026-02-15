@@ -66,7 +66,7 @@ interface ProjectsSectionProps {
 }
 
 const ProjectsSection = ({ data }: ProjectsSectionProps) => {
-  console.log(data);
+  // console.log(data);
   const projects = data && data.length > 0 ? data : defaultProjects;
   const sectionRef = useRef<HTMLElement>(null);
   const pinContainerRef = useRef<HTMLDivElement>(null);
