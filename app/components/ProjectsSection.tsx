@@ -121,43 +121,46 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
         tl.to(cards[i], { y: 0, duration: 1, ease: "none" }, i - 1);
       }
 
-      // Parallax mockups
-      desktopRefs.current.forEach((desktop) => {
-        if (!desktop) return;
-        gsap.fromTo(
-          desktop,
-          { x: -100, scale: 0.95 },
-          {
-            x: -30,
-            scale: 1.25,
-            ease: "none",
-            scrollTrigger: {
-              trigger: desktop.closest(".project-card"),
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
+      // Parallax mockups (Only on Desktop/Tablet)
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
+        desktopRefs.current.forEach((desktop) => {
+          if (!desktop) return;
+          gsap.fromTo(
+            desktop,
+            { x: -100, scale: 0.95 },
+            {
+              x: -30,
+              scale: 1.25,
+              ease: "none",
+              scrollTrigger: {
+                trigger: desktop.closest(".project-card"),
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
             },
-          },
-        );
-      });
+          );
+        });
 
-      phoneRefs.current.forEach((phone) => {
-        if (!phone) return;
-        gsap.fromTo(
-          phone,
-          { x: 100, scale: 0.95 },
-          {
-            x: -30,
-            scale: 1.25,
-            ease: "none",
-            scrollTrigger: {
-              trigger: phone.closest(".project-card"),
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
+        phoneRefs.current.forEach((phone) => {
+          if (!phone) return;
+          gsap.fromTo(
+            phone,
+            { x: 100, scale: 0.95 },
+            {
+              x: -30,
+              scale: 1.25,
+              ease: "none",
+              scrollTrigger: {
+                trigger: phone.closest(".project-card"),
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
             },
-          },
-        );
+          );
+        });
       });
     },
     { scope: sectionRef, dependencies: [projects] },
@@ -205,7 +208,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
               ref={(el) => {
                 cardRefs.current[index] = el;
               }}
-              className={`project-card absolute inset-0 w-full h-full ${project.bgColor} flex flex-col justify-start lg:justify-between overflow-hidden py-12 lg:py-0`}
+              className={`project-card absolute inset-0 w-full h-full ${project.bgColor} flex flex-col justify-start lg:justify-between overflow-hidden py-6 md:py-12 lg:py-0`}
               style={{ backgroundColor: bgColorHex ?? undefined }}
             >
               {/* Top Marquee */}
@@ -223,15 +226,15 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
               </div>
 
               {/* Main Content Area */}
-              <div className="flex-1 w-full flex flex-col lg:flex-row items-center justify-center relative z-10 px-4 gap-8 lg:gap-0">
+              <div className="flex-1 w-full flex flex-col lg:flex-row items-center justify-center relative z-10 px-4 gap-4 lg:gap-0">
                 {/* Mockups Container (Mobile: Top, Desktop: Sides) */}
-                <div className="relative w-full h-[310px] md:h-[550px] lg:absolute lg:inset-0 lg:h-full order-1 lg:order-0 pointer-events-none">
+                <div className="relative w-full h-[260px] md:h-[550px] lg:absolute lg:inset-0 lg:h-full order-1 lg:order-0 pointer-events-none">
                   {/* Desktop Mockup */}
                   <div
                     ref={(el) => {
                       desktopRefs.current[index] = el;
                     }}
-                    className="absolute top-1/2 -translate-y-1/2 -left-[10%] md:left-[8%] lg:-left-[10%] w-[99vw] md:w-[65vw] lg:w-[65vw] aspect-video z-10 drop-shadow-2xl"
+                    className="absolute top-1/2 -translate-y-1/2 -left-[20%] md:left-[8%] lg:-left-[10%] w-[99vw] md:w-[65vw] lg:w-[65vw] aspect-video z-10 drop-shadow-2xl"
                   >
                     <Image
                       src={project.desktopMockup}
@@ -288,7 +291,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                   </p>
 
                   {/* CTA Button */}
-                  <div className="mb-10">
+                  <div className="mb-4 md:mb-10">
                     <Link
                       href={project.link || "#contact"}
                       target={project.link ? "_blank" : "_self"}

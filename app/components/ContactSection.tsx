@@ -63,9 +63,9 @@ const ContactSection = ({ data }: ContactSectionProps) => {
   const onSubmit = async (formData: FormValues) => {
     const toastId = toast.loading("جاري إرسال رسالتك...");
     try {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
+      const serviceId = "service_ckigjip";
+      const templateId = "template_xf1rz89";
+      const publicKey = "_k1X2PA3BL2jXxVne";
 
       if (!serviceId || !templateId || !publicKey) {
         console.warn("EmailJS configuration is missing. Falling back to console log.");

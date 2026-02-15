@@ -178,7 +178,7 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
           }
         }
 
-        tl.to(marqueeContainerRef.current, { y: -30, opacity: 1, duration: 1, ease: "power2.out" }, ">");
+        tl.to(marqueeContainerRef.current, { y: -10, opacity: 1, duration: 1, ease: "power2.out" }, ">");
       });
 
       // ===========================
