@@ -69,13 +69,13 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
     <div className="fixed top-0 left-0 w-full flex justify-center z-100 pointer-events-none pt-4 md:pt-6">
       <nav
         ref={navRef}
-        className="pointer-events-auto flex items-center justify-between gap-4 md:gap-12 px-4 py-2 md:px-8 md:py-4 rounded-full bg-white/40 backdrop-blur-xl border border-white/40 shadow-2xl shadow-slate-200/50"
+        className="pointer-events-auto flex items-center justify-between gap-4 md:gap-12 px-4 py-2 md:px-8 md:py-4 rounded-full bg-transparent md:bg-white/40 md:backdrop-blur-xl md:border md:border-white/40 md:shadow-2xl md:shadow-slate-200/50 w-full md:w-auto mx-4 md:mx-0"
         style={{ willChange: "transform" }}
       >
-        {/* Mobile Sheet Trigger */}
+        {/* Mobile Sheet Trigger (Menu on Left) */}
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
-            <button className="md:hidden p-2 rounded-full text-[#0A2463] bg-white/50 hover:bg-white transition-all duration-300">
+            <button className="md:hidden p-2 rounded-full text-[#0A2463] bg-white/80 shadow-sm border border-slate-100 transition-all duration-300">
               <Menu size={24} />
             </button>
           </SheetTrigger>
@@ -117,7 +117,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
           </SheetContent>
         </Sheet>
 
-        {/* Logo */}
+        {/* Logo (Logo on Right via justify-between) */}
         <div className="shrink-0">
           <Link href="#home" onClick={(e) => handleScroll(e, "#home")} className="flex items-center">
             {logoUrl ? (
@@ -144,7 +144,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
         </div>
 
         {/* CTA Button */}
-        <div className="shrink-0">
+        <div className="hidden md:block shrink-0">
           <CreativeButton
             text="ابدأ الآن"
             size="sm"
