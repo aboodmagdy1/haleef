@@ -77,3 +77,14 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
   _id,
   "logoUrl": logo.asset->url
 }`;
+
+export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
+  _id,
+  title,
+  heroTitle,
+  heroSubtitle,
+  content,
+  vision,
+  mission,
+  "imageUrl": image.asset->url
+}`;

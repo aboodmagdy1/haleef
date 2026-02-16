@@ -34,7 +34,7 @@ interface ConflictSectionProps {
 }
 
 const HeaderContent = ({ title, description }: { title: string; description: string }) => (
-  <div className="flex flex-col items-center justify-center text-center px-4">
+  <div className="flex flex-col items-center justify-center text-center px-4 py-4 md:py-0">
     <div className="flex items-center gap-2 mb-1 text-[#3E92CC] font-bold tracking-wider text-sm uppercase">
       <span className="w-8 h-[2px] bg-[#3E92CC]"></span>
       01 — التحدي
@@ -86,7 +86,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
   return (
     <section
       id="challenge"
-      className="relative w-full lg:min-h-fit min-h-[100dvh] bg-slate-50 text-[#0A2463] overflow-hidden -mt-px"
+      className="relative w-full lg:min-h-fit min-h-screen md:min-h-dvh bg-slate-50 text-[#0A2463] overflow-hidden -mt-px"
     >
       <style jsx global>{`
         .split-word {
@@ -97,7 +97,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
       `}</style>
 
       {/* Bottom Gemini Effect & Button */}
-      <div className="absolute bottom-[-24dvh] left-0 w-full  h-[95dvh] pointer-events-none ">
+      <div className="absolute bottom-[-30dvh] md:bottom-[-24dvh] left-0 w-full h-[80dvh] md:h-[95dvh] pointer-events-none ">
         <GoogleGeminiEffect className="w-full h-full">
           <div className="pointer-events-auto mt-15 z-10">
             <CreativeButton
@@ -150,10 +150,10 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
         </div>
 
         {/* ================= MOBILE LAYOUT (Stack) ================= */}
-        <div className="flex md:hidden flex-col items-center justify-center min-h-[70dvh] w-full pb-20 relative ">
+        <div className="flex md:hidden flex-col items-center justify-center min-h-[90dvh] w-full relative gap-8">
           {/* 1. Problems Loop - Red */}
-          <div dir="ltr" className="w-full relative py-2 pointer-events-auto">
-            <LogoLoop logos={problems} speed={30} direction="left" gap={16} className="py-2" />
+          <div dir="ltr" className="w-full relative  pointer-events-auto">
+            <LogoLoop logos={problems} speed={30} direction="left" gap={16} className="" />
           </div>
 
           {/* Vertical Line Connection (Between Problems and Gap) */}
@@ -163,7 +163,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
           </div>
 
           {/* 2. Header Text - The Gap (The Bridge) */}
-          <div className="relative z-20 pointer-events-auto py-2 shrink-0">
+          <div className="relative z-20 pointer-events-auto shrink-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[120%] bg-white/40 blur-3xl -z-10 rounded-full"></div>
             <HeaderContent title={content.title} description={content.description} />
           </div>
@@ -175,8 +175,8 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
           </div>
 
           {/* 3. Solutions Loop - Blue */}
-          <div dir="ltr" className="w-full relative py-2 pointer-events-auto">
-            <LogoLoop logos={solutions} speed={35} direction="right" gap={16} className="py-2" />
+          <div dir="ltr" className="w-full relative pointer-events-auto">
+            <LogoLoop logos={solutions} speed={35} direction="right" gap={16} className="" />
           </div>
         </div>
       </div>

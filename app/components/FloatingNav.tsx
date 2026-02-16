@@ -59,11 +59,12 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
     { label: "الخدمات", href: "#services" },
     { label: "أعمالنا", href: "#projects" },
     { label: "كيف نعمل", href: "#about" },
+    { label: "من نحن", href: "/about" },
     { label: "تواصل معنا", href: "#contact" },
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full flex justify-center z-[100] pointer-events-none pt-4 md:pt-6">
+    <div className="fixed top-0 left-0 w-full flex justify-center z-100 pointer-events-none pt-4 md:pt-6">
       <nav
         ref={navRef}
         className="pointer-events-auto flex items-center justify-between gap-4 md:gap-12 px-4 py-2 md:px-8 md:py-4 rounded-full bg-white/40 backdrop-blur-xl border border-white/40 shadow-2xl shadow-slate-200/50"

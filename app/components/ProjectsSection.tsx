@@ -228,7 +228,7 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
               {/* Main Content Area */}
               <div className="flex-1 w-full flex flex-col lg:flex-row items-center justify-center relative z-10 px-4 gap-4 lg:gap-0">
                 {/* Mockups Container (Mobile: Top, Desktop: Sides) */}
-                <div className="relative w-full h-[260px] md:h-[550px] lg:absolute lg:inset-0 lg:h-full order-1 lg:order-0 pointer-events-none">
+                <div className="relative w-full h-[180px] sm:h-[220px] md:h-[550px] lg:absolute lg:inset-0 lg:h-full order-1 lg:order-0 pointer-events-none mb-2 lg:mb-0">
                   {/* Desktop Mockup */}
                   <div
                     ref={(el) => {
@@ -263,9 +263,9 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                 </div>
 
                 {/* Content Center */}
-                <div className="relative z-30 flex flex-col items-center text-center max-w-xl mx-auto order-2 lg:order-0">
+                <div className="relative z-30 flex flex-col items-center text-center max-w-xl mx-auto order-2 lg:order-0 lg:mt-0">
                   {/* Badges */}
-                  <div className="flex gap-2 mb-6 justify-center flex-wrap">
+                  <div className="flex gap-2 mb-3 md:mb-6 justify-center flex-wrap">
                     {project.badges.map((b, i) => (
                       <span
                         key={i}
@@ -277,21 +277,23 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                   </div>
 
                   <h2
-                    className={`text-4xl md:text-7xl font-black mb-3 tracking-tighter ${isDark ? "text-white" : "text-[#0A2463]"}`}
+                    className={`text-3xl md:text-7xl font-black mb-1 lg:mb-3 tracking-tighter ${isDark ? "text-white" : "text-[#0A2463]"}`}
                   >
                     {project.name}
                   </h2>
-                  <p className={`text-xl md:text-2xl font-bold mb-4 ${isDark ? "text-white/80" : "text-slate-600"}`}>
+                  <p
+                    className={`text-lg md:text-2xl font-bold mb-2 lg:mb-4 ${isDark ? "text-white/80" : "text-slate-600"}`}
+                  >
                     {project.subtitle}
                   </p>
                   <p
-                    className={`text-base md:text-lg leading-relaxed mb-8 max-w-lg ${isDark ? "text-white/60" : "text-slate-500"}`}
+                    className={`text-sm md:text-lg leading-relaxed mb-2 md:mb-8 max-w-lg ${isDark ? "text-white/60" : "text-slate-500"}`}
                   >
                     {project.description}
                   </p>
 
                   {/* CTA Button */}
-                  <div className="mb-4 md:mb-10">
+                  <div className="mb-2 md:mb-10">
                     <Link
                       href={project.link || "#contact"}
                       target={project.link ? "_blank" : "_self"}
@@ -308,10 +310,10 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                           }
                         }
                       }}
-                      className={`group flex items-center gap-3 px-8 py-4 rounded-full border-2 font-bold transition-all duration-300 ${isDark ? "border-white text-white hover:bg-white hover:text-black" : "border-[#0A2463] text-[#0A2463] hover:bg-[#0A2463] hover:text-white"}`}
+                      className={`group flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full border-2 font-bold transition-all duration-300 transform active:scale-95 ${isDark ? "border-white text-white hover:bg-white hover:text-black" : "border-[#0A2463] text-[#0A2463] hover:bg-[#0A2463] hover:text-white"}`}
                     >
-                      مشاهدة المشروع
-                      <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                      <span className="text-sm md:text-base">مشاهدة المشروع</span>
+                      <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
