@@ -17,25 +17,25 @@
   --color-destructive: #ef4444;
 
   /* Shadcn Animations */
-  --animate-in: fade-in 0.2s ease-out;
-  --animate-out: fade-out 0.2s ease-in;
+  --animate-in: enter 0.3s ease-out;
+  --animate-out: exit 0.3s ease-in;
+  --animate-fade-in: enter 0.3s ease-out;
+  --animate-fade-out: exit 0.3s ease-in;
   --animate-slide-in-from-right: slide-in-from-right 0.3s ease-out;
   --animate-slide-out-to-right: slide-out-to-right 0.3s ease-in;
 
-  @keyframes fade-in {
+  @keyframes enter {
     from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
+      opacity: var(--tw-enter-opacity, 1);
+      transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+        scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1));
     }
   }
-  @keyframes fade-out {
-    from {
-      opacity: 1;
-    }
+  @keyframes exit {
     to {
-      opacity: 0;
+      opacity: var(--tw-exit-opacity, 1);
+      transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
+        scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1));
     }
   }
   @keyframes slide-in-from-right {
