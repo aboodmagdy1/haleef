@@ -21,6 +21,7 @@ const ProjectsSection = nextDynamic(() => import("./components/ProjectsSection")
 const AboutSection = nextDynamic(() => import("./components/AboutSection"), { ssr: true });
 const ContactSection = nextDynamic(() => import("./components/ContactSection"), { ssr: true });
 const Footer = nextDynamic(() => import("./components/Footer"), { ssr: true });
+const LandscapeGuard = nextDynamic(() => import("./components/LandscapeGuard"), { ssr: true });
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -63,6 +64,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--color-background)] relative">
+      <LandscapeGuard />
       <ReactLenis root />
       <HeroSection data={hero} />
       <ConflictSection data={conflict} />
@@ -70,7 +72,7 @@ export default async function Home() {
       <SolutionsSection data={services} />
       <ProjectsSection data={projects} />
       <AboutSection data={about} />
-      <ContactSection data={contact} />
+      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
       <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
     </main>
   );

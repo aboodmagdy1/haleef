@@ -233,24 +233,27 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
     >
       <div className="">
         {/* On Mobile: auto height. On Desktop: h-screen for pinning */}
-        <div ref={pinContainerRef} className="relative w-full h-auto lg:h-screen flex flex-col justify-center">
+        <div
+          ref={pinContainerRef}
+          className="relative w-full h-auto lg:h-[calc(100dvh+30px)] flex flex-col justify-center lg:pb-[calc(max(3rem,12vh))]"
+        >
           <div className="grid grid-cols-1 container mx-auto px-6 md:px-8 lg:grid-cols-2 w-full items-start lg:items-center grow gap-8 lg:gap-0">
             {/* Left Side: Text */}
             <div className="flex flex-col justify-center lg:py-0 order-1">
               <div ref={leftContentRef}>
-                <div className="border-r-2 md:border-r-4 border-blue-600 pr-4 md:pr-6 mb-6 md:mb-8">
+                <div className="border-r-2 md:border-r-4 border-blue-600 pr-4 md:pr-6 mb-[calc(min(2rem,4vh))]">
                   <div className="flex items-center gap-2 mb-2 text-blue-600 font-bold tracking-wider text-xs md:text-sm uppercase">
                     <span className="w-6 md:w-8 h-[2px] bg-blue-600"></span>
                     02 — الحل
                   </div>
-                  <h2 className="text-3xl md:text-6xl font-black mb-3 md:mb-4 leading-tight">
+                  <h2 className="text-3xl md:text-4xl lg:text-6xl font-black mb-3 md:mb-4 leading-tight">
                     كيف نصنع <span className="text-blue-600">الفرق؟</span>
                   </h2>
-                  <p className="text-lg md:text-xl text-slate-500 font-medium">
+                  <p className="text-base md:text-lg lg:text-xl text-slate-500 font-medium">
                     الأمر بسيط.. نحن نهتم بالتفاصيل التي لا يراها غيرنا.
                   </p>
                 </div>
-                <div className="space-y-4 md:space-y-6 text-base md:text-lg text-slate-600 leading-relaxed max-w-lg mb-8 md:mb-10">
+                <div className="space-y-[calc(min(1.5rem,3vh))] text-base md:text-lg text-slate-600 leading-relaxed max-w-lg mb-[calc(min(2.5rem,5vh))]">
                   <p>أنا أتولى الهيكل، التصميم، والتنفيذ، وأحرص في النهاية أن كل شيء يعمل تماماً كما تمنيت.</p>
                   <p>نحول الأفكار المعقدة إلى حلول رقمية بسيطة، جذابة، وقابلة للنمو.</p>
                 </div>
@@ -277,15 +280,17 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
                     ref={(el) => {
                       cardRefs.current[index] = el;
                     }}
-                    className={`service-card w-full p-6 md:p-10 rounded-3xl border-2 shadow-xl flex flex-col gap-5 ${service.bg} ${service.border}`}
+                    className={`service-card w-full p-6 md:p-8 lg:p-10 rounded-3xl border-2 shadow-xl flex flex-col gap-4 lg:gap-5 ${service.bg} ${service.border}`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm shrink-0">
-                        {getIcon(service.iconName, `w-6 h-6 md:w-8 md:h-8 ${service.text}`)}
+                      <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm shrink-0">
+                        {getIcon(service.iconName, `w-5 h-5 md:w-8 md:h-8 ${service.text}`)}
                       </div>
-                      <h3 className={`text-xl md:text-3xl font-bold ${service.text}`}>{service.title}</h3>
+                      <h3 className={`text-lg md:text-2xl lg:text-3xl font-bold ${service.text}`}>{service.title}</h3>
                     </div>
-                    <p className="text-slate-600 text-base md:text-lg leading-relaxed">{service.description}</p>
+                    <p className="text-slate-600 text-sm md:text-base lg:text-lg leading-relaxed">
+                      {service.description}
+                    </p>
                     <ul className="flex flex-col gap-2">
                       {service.features.map((feature, idx) => (
                         <li
@@ -304,7 +309,7 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
           </div>
 
           <div ref={marqueeContainerRef} className="relative w-full lg:absolute lg:bottom-0 lg:left-0">
-            <div className="pb-10 lg:pb-10">
+            <div className="pb-10 lg:pb-0">
               <InfiniteMarquee
                 textArr={["مشاريعنا", "أعمالنا", "إبداعنا", "إنجازاتنا"]}
                 bg="bg-gradient-to-r from-[#3E92CC] to-[#0A2463]"
@@ -313,7 +318,6 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
                 rotate={-2}
                 separator="✦"
                 fontSize="text-5xl md:text-7xl"
-                className="shadow-2xl"
               />
             </div>
           </div>

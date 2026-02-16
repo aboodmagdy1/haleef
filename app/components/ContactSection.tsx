@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,9 +36,10 @@ export interface ContactData {
 
 interface ContactSectionProps {
   data?: ContactData;
+  logoUrl?: string | null;
 }
 
-const ContactSection = ({ data }: ContactSectionProps) => {
+const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLDivElement>(null);
   const infoRef = React.useRef<HTMLDivElement>(null);
@@ -169,9 +171,15 @@ const ContactSection = ({ data }: ContactSectionProps) => {
           <div ref={infoRef} className="w-full lg:w-1/3 flex flex-col gap-6">
             {/* Profile/Intro Card */}
             <div className="bg-white border border-slate-100 p-8 rounded-3xl flex flex-col gap-4 shadow-xl shadow-slate-200/40 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-              <div className="w-16 h-16 rounded-full bg-[#3E92CC] flex items-center justify-center text-2xl font-bold text-white mb-2 shadow-lg shadow-[#3E92CC]/30">
-                ح
-              </div>
+              {logoUrl ? (
+                <div className="mb-2">
+                  <Image src={logoUrl} alt="Logo" width={120} height={48} className="h-10 w-auto object-contain" />
+                </div>
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-[#3E92CC] flex items-center justify-center text-2xl font-bold text-white mb-2 shadow-lg shadow-[#3E92CC]/30">
+                  ح
+                </div>
+              )}
               <div>
                 <h3 className="text-2xl font-bold text-[#0A2463] mb-1">فريق حليف</h3>
                 <p className="text-[#3E92CC] font-medium tracking-wide">النمو يبدأ هنا</p>

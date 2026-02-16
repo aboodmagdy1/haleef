@@ -167,9 +167,9 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
   );
 
   return (
-    <section id="projects" ref={sectionRef} className="relative bg-white" dir="rtl">
+    <section id="projects" ref={sectionRef} className="relative">
       {/* Section Header */}
-      <div className="py-12 md:py-20 -mt-20 container mx-auto px-4 md:px-8 flex flex-col items-center text-center">
+      <div className="py-12 md:py-20 -mt-10 container mx-auto px-4 md:px-8 flex flex-col items-center text-center">
         <div className="flex items-center gap-2 mb-6 text-blue-600 font-bold tracking-wider text-sm uppercase">
           <span className="w-8 h-[2px] bg-blue-600"></span>
           03 — أعمالنا

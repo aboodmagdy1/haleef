@@ -97,7 +97,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
       `}</style>
 
       {/* Bottom Gemini Effect & Button */}
-      <div className="absolute -bottom-36 left-0 w-full h-[550px] md:h-[500px] pointer-events-none ">
+      <div className="absolute bottom-[-24dvh] left-0 w-full  h-[76dvh] pointer-events-none ">
         <GoogleGeminiEffect className="w-full h-full">
           <div className="pointer-events-auto mt-15 z-10">
             <CreativeButton
@@ -113,9 +113,9 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
 
       <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-24 pointer-events-none">
         {/* ================= DESKTOP LAYOUT (Grid) ================= */}
-        <div className="hidden md:grid grid-cols-4 gap-8 h-[700px] items-center">
+        <div className="hidden md:grid grid-cols-4 gap-8 h-[70dvh] items-center">
           {/* Left: Problems Vertical Loop */}
-          <div className="col-span-1 opacity-100 hover:opacity-100 transition-opacity duration-500 h-[700px] relative overflow-hidden pointer-events-auto flex justify-center">
+          <div className="col-span-1 opacity-100 hover:opacity-100 transition-opacity duration-500 h-[70dvh] relative overflow-hidden pointer-events-auto flex justify-center">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-red-100 rounded-full blur-md animate-pulse z-20"></div>
             <LogoLoop
               logos={problems}
@@ -135,7 +135,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
           </div>
 
           {/* Right: Solutions Vertical Loop */}
-          <div className="col-span-1 opacity-100 hover:opacity-100 transition-opacity duration-500 h-[700px] relative overflow-hidden pointer-events-auto flex justify-center">
+          <div className="col-span-1 opacity-100 hover:opacity-100 transition-opacity duration-500 h-[70dvh] relative overflow-hidden pointer-events-auto flex justify-center">
             <div className="absolute top-0 right-1/2 translate-x-1/2 w-8 h-8 bg-blue-100 rounded-full blur-md animate-pulse z-20"></div>
             <LogoLoop
               logos={solutions}
@@ -150,7 +150,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
         </div>
 
         {/* ================= MOBILE LAYOUT (Stack) ================= */}
-        <div className="flex md:hidden flex-col items-center justify-center min-h-[80vh] w-full pb-20 pt-10 relative gap-4">
+        <div className="flex md:hidden flex-col items-center justify-center min-h-[70dvh] w-full pb-20 relative gap-4">
           {/* 1. Problems Loop - Red */}
           <div dir="ltr" className="w-full relative py-2 pointer-events-auto">
             <LogoLoop logos={problems} speed={30} direction="left" gap={16} className="py-2" />

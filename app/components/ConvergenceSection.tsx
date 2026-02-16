@@ -244,16 +244,16 @@ const ConvergenceSection = () => {
 
       const mm = gsap.matchMedia();
 
-      // Desktop Animations (Subtle movements)
-      mm.add("(min-width: 1024px)", () => {
+      // Desktop Animations (Large Screens)
+      mm.add("(min-width: 1280px)", () => {
         tl.to(manRef.current, { y: "-15%", x: "4%", rotation: 0, duration: 1.5, ease: "power2.out" }, contactTime);
         tl.to(robotRef.current, { y: "15%", x: "-10%", rotation: 0, duration: 1.5, ease: "power2.out" }, contactTime);
       });
 
-      // Mobile/Tablet Animations (Dynamic movements)
-      mm.add("(max-width: 1023px)", () => {
-        tl.to(manRef.current, { y: "-15%", x: "25%", rotation: 0, duration: 1.5, ease: "power2.out" }, contactTime);
-        tl.to(robotRef.current, { y: "15%", x: "-30%", rotation: 0, duration: 1.5, ease: "power2.out" }, contactTime);
+      // Mobile/Tablet Animations (Tablets & Mobile)
+      mm.add("(max-width: 1279px)", () => {
+        tl.to(manRef.current, { y: "-15%", x: "18%", rotation: 0, duration: 1.5, ease: "power2.out" }, contactTime);
+        tl.to(robotRef.current, { y: "15%", x: "-22%", rotation: 0, duration: 1.5, ease: "power2.out" }, contactTime);
       });
 
       tl.fromTo(
@@ -286,14 +286,14 @@ const ConvergenceSection = () => {
       const touchTime = contactTime + 2.5;
       const flashTime = touchTime + 0.8;
 
-      mm.add("(min-width: 1024px)", () => {
+      mm.add("(min-width: 1280px)", () => {
         tl.to(manRef.current, { y: "20%", x: "4%", rotation: 0, duration: 1.2, ease: "power1.inOut" }, touchTime);
         tl.to(robotRef.current, { y: "-22%", x: "-10%", rotation: 0, duration: 1.2, ease: "power1.inOut" }, touchTime);
       });
 
-      mm.add("(max-width: 1023px)", () => {
-        tl.to(manRef.current, { y: "20%", x: "18%", rotation: 0, duration: 1.2, ease: "power1.inOut" }, touchTime);
-        tl.to(robotRef.current, { y: "-22%", x: "-22%", rotation: 0, duration: 1.2, ease: "power1.inOut" }, touchTime);
+      mm.add("(max-width: 1279px)", () => {
+        tl.to(manRef.current, { y: "20%", x: "12%", rotation: 0, duration: 1.2, ease: "power1.inOut" }, touchTime);
+        tl.to(robotRef.current, { y: "-22%", x: "-15%", rotation: 0, duration: 1.2, ease: "power1.inOut" }, touchTime);
       });
 
       tl.to(
@@ -348,7 +348,7 @@ const ConvergenceSection = () => {
         {phrases.map((phrase, i) => (
           <h2
             key={i}
-            className="absolute text-4xl md:text-8xl font-black text-[#0A2463] text-center opacity-0 whitespace-nowrap drop-shadow-[0_0_20px_rgba(56,189,248,0.8)]"
+            className="absolute text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-[#0A2463] text-center opacity-0 whitespace-nowrap drop-shadow-[0_0_20px_rgba(56,189,248,0.8)]"
           >
             {phrase}
           </h2>
@@ -357,7 +357,7 @@ const ConvergenceSection = () => {
 
       <div
         ref={manRef}
-        className="absolute top-0 w-full h-[50vh] flex flex-col justify-end items-center z-20 will-change-transform opacity-0"
+        className="absolute top-0 w-full h-[45vh] lg:h-[45vh] lg:max-h-[500px] xl:h-[50vh] xl:max-h-none flex flex-col justify-end items-center z-20 will-change-transform opacity-0"
       >
         <div className="relative w-80 md:w-96 lg:w-[500px] aspect-3/4">
           <Image
@@ -372,7 +372,7 @@ const ConvergenceSection = () => {
 
       <div
         ref={robotRef}
-        className="absolute bottom-0 w-full h-[50vh] flex flex-col justify-start items-center z-20 will-change-transform opacity-0"
+        className="absolute bottom-0 w-full h-[45vh] lg:h-[45vh] lg:max-h-[500px] xl:h-[50vh] xl:max-h-none flex flex-col justify-start items-center z-20 will-change-transform opacity-0"
       >
         <div className="relative w-104 md:w-lg lg:w-[650px] aspect-3/4">
           <Image
@@ -389,7 +389,7 @@ const ConvergenceSection = () => {
         <h1
           id="final-text"
           ref={finalTextRef}
-          className="text-6xl md:text-9xl font-black text-transparent pb-5 bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white opacity-0 drop-shadow-[0_0_40px_rgba(37,99,235,1)]"
+          className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-transparent pb-5 bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white opacity-0 drop-shadow-[0_0_40px_rgba(37,99,235,1)]"
         >
           صافح طموحك
         </h1>

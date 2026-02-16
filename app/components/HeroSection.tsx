@@ -114,11 +114,11 @@ export default function HeroSection({ data }: HeroSectionProps) {
     <section
       id="home"
       ref={containerRef}
-      className="relative w-full h-dvh flex flex-col items-center justify-center bg-[#F8FAFC]"
+      className="relative w-full h-[100dvh] min-h-[400px] flex flex-col items-center justify-center bg-[#F8FAFC]"
     >
       <style jsx global>{`
         .split-word {
-          padding-bottom: 1.5rem !important;
+          padding-bottom: 2.1rem !important;
           display: inline-block;
           will-change: transform, opacity;
         }
@@ -139,15 +139,15 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
       {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-[40vh] bg-linear-to-b from-blue-100/40 via-blue-50/90 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-[40dvh] bg-linear-to-b from-blue-100/40 via-blue-50/90 to-transparent" />
       </div>
 
       <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
         {/* Left Arm (Robot) */}
         <div
           ref={leftArmRef}
-          className="absolute left-[-12%] md:left-[5%] w-[65vw] md:w-[45vw] h-[35vh] flex items-center justify-end z-20"
-          style={{ top: "40%", transform: "translateY(-40%)" }}
+          className="absolute left-[-12%] md:left-[-7vw] w-[65vw] md:w-[55vw] h-[35dvh] flex items-center justify-end z-20"
+          style={{ top: "35%", transform: "translateY(-35%)" }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -163,8 +163,8 @@ export default function HeroSection({ data }: HeroSectionProps) {
         {/* Right Arm (Man) */}
         <div
           ref={rightArmRef}
-          className="absolute right-[-12%] md:right-[0%] w-[65vw] md:w-[45vw] h-[35vh] flex items-center justify-start z-10"
-          style={{ top: "40%", transform: "translateY(-40%)" }}
+          className="absolute right-[-12%] md:right-[-7vw] w-[65vw] md:w-[55vw] h-[35dvh] flex items-center justify-start z-10"
+          style={{ top: "35%", transform: "translateY(-35%)" }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -190,6 +190,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
             delay={0}
             duration={1.3}
             splitType="words"
+            spanclassname="!pb-6"
             from={{ y: 120 }}
             to={{ y: 0 }}
           />
@@ -198,7 +199,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         <div className="max-w-2xl mx-auto overflow-hidden" style={{ direction: "rtl" }}>
           <SplitText
             text={content.subtitle}
-            className="text-[#0A2463] mt-2 text-sm sm:text-lg md:text-2xl font-semibold leading-relaxed inline-block"
+            className="text-[#0A2463]  mt-2 text-sm sm:text-lg md:text-2xl font-semibold leading-relaxed inline-block"
             delay={100}
             duration={0.5}
             splitType="words"
