@@ -59,6 +59,15 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
 
   const handleSmoothScroll = (e: React.MouseEvent) => {
     if (href?.startsWith("#")) {
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+
+      // If section not found on current page, redirect to home with hash
+      if (!element) {
+        window.location.href = `/${href}`;
+        return;
+      }
+
       e.preventDefault();
       if (lenis) {
         lenis.scrollTo(href, {
@@ -67,11 +76,7 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
       } else {
-        const targetId = href.replace("#", "");
-        const element = document.getElementById(targetId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
     if (onClick) onClick(e as any);

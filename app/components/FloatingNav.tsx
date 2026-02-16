@@ -18,10 +18,29 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/co
  */
 export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const navRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
   const lenis = useLenis();
 
-  const handleScroll = (e: React.MouseEvent<HTMLElement> | React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  useLenis(({ scroll }) => {
+    // Hide on scroll down, show on scroll up
+    // threshold of 10-20px to prevent flickering
+    const delta = scroll - lastScrollY.current;
+
+    if (scroll < 100) {
+      setIsVisible(true);
+    } else if (delta > 10) {
+      setIsVisible(false);
+    } else if (delta < -10) {
+      setIsVisible(true);
+    }
+
+    lastScrollY.current = scroll;
+  });
+
+  const handleScroll = (e: React.MouseEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement>, id: string) => {
     setIsMenuOpen(false);
     if (!id || id === "#" || !id.startsWith("#")) return;
 
@@ -78,7 +97,12 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full flex justify-center z-100 pointer-events-none pt-4 md:pt-6">
+    <div
+      className="fixed top-0 left-0 w-full flex justify-center z-100 pointer-events-none pt-4 md:pt-6 transition-transform duration-400 ease-in-out"
+      style={{
+        transform: isVisible ? "translateY(0)" : "translateY(-150%)",
+      }}
+    >
       <nav
         ref={navRef}
         className="pointer-events-auto flex items-center justify-between gap-4 md:gap-12 px-4 py-2 md:px-8 md:py-4 rounded-full bg-transparent md:bg-white/40 md:backdrop-blur-xl md:border md:border-white/40 md:shadow-2xl md:shadow-slate-200/50 w-full md:w-auto mx-4 md:mx-0"
@@ -103,16 +127,30 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
             </SheetHeader>
 
             <div className="flex flex-col grow p-6 gap-6" dir="rtl">
-              {navItems.map((item, i) => (
-                <a
-                  key={i}
-                  href={item.href}
-                  onClick={(e) => handleScroll(e, item.href)}
-                  className="text-2xl font-bold text-[#0A2463] hover:text-[#3E92CC] transition-colors py-2 border-b border-slate-50 last:border-0 text-right"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item, i) => {
+                const isHash = item.href.startsWith("#");
+                if (isHash) {
+                  return (
+                    <button
+                      key={i}
+                      onClick={(e) => handleScroll(e, item.href)}
+                      className="text-2xl font-bold text-[#0A2463] hover:text-[#3E92CC] transition-colors py-2 border-b border-slate-50 last:border-0 text-right bg-transparent border-none p-0"
+                    >
+                      {item.label}
+                    </button>
+                  );
+                }
+                return (
+                  <Link
+                    key={i}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-2xl font-bold text-[#0A2463] hover:text-[#3E92CC] transition-colors py-2 border-b border-slate-50 last:border-0 text-right"
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="p-6 mt-auto border-t border-slate-50 flex flex-col gap-4">
@@ -131,7 +169,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
 
         {/* Logo (Logo on Right via justify-between) */}
         <div className="shrink-0">
-          <Link href="#home" onClick={(e) => handleScroll(e, "#home")} className="flex items-center">
+          <Link href="#home" onClick={(e: any) => handleScroll(e, "#home")} className="flex items-center">
             {logoUrl ? (
               <Image src={logoUrl} alt="HALEIF" width={100} height={36} className="h-6 md:h-8 w-auto object-contain" />
             ) : (
@@ -142,17 +180,31 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-6 text-[#0A2463]/80 font-medium">
-          {navItems.map((item, i) => (
-            <a
-              key={i}
-              href={item.href}
-              onClick={(e) => handleScroll(e, item.href)}
-              className="relative transition-colors hover:text-[#3E92CC] text-sm lg:text-base group"
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#3E92CC] transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
+          {navItems.map((item, i) => {
+            const isHash = item.href.startsWith("#");
+            if (isHash) {
+              return (
+                <button
+                  key={i}
+                  onClick={(e) => handleScroll(e, item.href)}
+                  className="relative transition-colors hover:text-[#3E92CC] text-sm lg:text-base group bg-transparent border-none p-0 font-inherit"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#3E92CC] transition-all duration-300 group-hover:w-full" />
+                </button>
+              );
+            }
+            return (
+              <Link
+                key={i}
+                href={item.href}
+                className="relative transition-colors hover:text-[#3E92CC] text-sm lg:text-base group"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#3E92CC] transition-all duration-300 group-hover:w-full" />
+              </Link>
+            );
+          })}
         </div>
 
         {/* CTA Button */}
