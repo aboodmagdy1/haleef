@@ -23,21 +23,33 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
 
   const handleScroll = (e: React.MouseEvent<HTMLElement> | React.MouseEvent<HTMLAnchorElement>, id: string) => {
     setIsMenuOpen(false);
-    if (!id.startsWith("#")) return;
+    if (!id || id === "#" || !id.startsWith("#")) return;
+
+    const targetId = id.replace("#", "");
+    const element = document.getElementById(targetId);
+
+    // If section not found on current page, redirect to home with hash
+    if (!element) {
+      window.location.href = `/${id}`;
+      return;
+    }
 
     e.preventDefault();
+    e.stopPropagation();
+
     if (lenis) {
       lenis.scrollTo(id, {
-        offset: -50,
+        offset: -80,
         duration: 1.5,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
-      const targetId = id.replace("#", "");
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth",
+      });
     }
   };
 

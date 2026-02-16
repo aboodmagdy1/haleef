@@ -2,12 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin, Github, Linkedin, Twitter, Instagram, Phone, FileText } from "lucide-react";
+import { Github, Linkedin, Twitter, Instagram } from "lucide-react";
 import { useLenis } from "lenis/react";
-import { gsap } from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-
-gsap.registerPlugin(ScrollToPlugin);
 
 export interface FooterData {
   slogan: string[];
@@ -98,32 +94,35 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
   const content = data || defaultFooterData;
   const lenis = useLenis();
 
-  const handleScroll = (e: React.MouseEvent, href: string) => {
-    if (href.startsWith("#")) {
-      e.preventDefault();
+  const handleScroll = (e: React.MouseEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement>, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(id);
+    if (!id || id === "#" || !id.startsWith("#")) return;
 
-      const targetId = href.replace("#", "");
-      const element = document.getElementById(targetId);
+    const targetId = id.replace("#", "");
+    const element = document.getElementById(targetId);
 
-      if (!element) {
-        window.location.href = `/${href}`;
-        return;
-      }
+    // If section not found on current page, redirect to home with hash
+    if (!element) {
+      window.location.href = `/${id}`;
+      return;
+    }
 
+    if (lenis) {
+      lenis.scrollTo(id, {
+        offset: -80,
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      // Clean native fallback for mobile/disabled lenis
       const offset = 80;
-      if (lenis) {
-        lenis.scrollTo(href, {
-          offset: -offset,
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        });
-      } else {
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({
-          top: elementPosition - offset,
-          behavior: "smooth",
-        });
-      }
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -150,18 +149,30 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
             </Link>
           </div>
 
-          {/* New Horizontal Menu (Simplified "Nav") */}
+          {/* Nav Menu */}
           <nav className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-slate-500 font-black text-sm md:text-base">
-            {content.navLinks.map((link, i) => (
-              <Link
-                key={i}
-                href={link.href}
-                onClick={(e) => handleScroll(e, link.href)}
-                className="hover:text-[#3E92CC] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {defaultFooterData.navLinks.map((link, i) => {
+              const isHash = link.href.startsWith("#");
+
+              if (isHash) {
+                return (
+                  <button
+                    key={i}
+                    onClick={(e) => handleScroll(e, link.href)}
+                    className="hover:text-[#3E92CC] transition-colors cursor-pointer bg-transparent border-none p-0 font-inherit"
+                    type="button"
+                  >
+                    {link.label}
+                  </button>
+                );
+              }
+
+              return (
+                <Link key={i} href={link.href} className="hover:text-[#3E92CC] transition-colors cursor-pointer">
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 

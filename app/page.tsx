@@ -1,6 +1,5 @@
 import nextDynamic from "next/dynamic";
 import HeroSection from "./components/HeroSection";
-import LenisProvider from "@/components/LenisProvider";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -62,17 +61,15 @@ export default async function Home() {
   }
 
   return (
-    <LenisProvider>
-      <main className="min-h-screen overflow-hidden bg-[var(--color-background)] relative">
-        <HeroSection data={hero} />
-        <ConflictSection data={conflict} />
-        <ConvergenceSection />
-        <SolutionsSection data={services} />
-        <ProjectsSection data={projects} />
-        <AboutSection data={about} />
-        <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
-        <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
-      </main>
-    </LenisProvider>
+    <main className="min-h-screen overflow-hidden bg-[var(--color-background)] relative">
+      <HeroSection data={hero} />
+      <ConflictSection data={conflict} />
+      <ConvergenceSection />
+      <SolutionsSection data={services} />
+      <ProjectsSection data={projects} />
+      <AboutSection data={about} />
+      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
+      <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
+    </main>
   );
 }

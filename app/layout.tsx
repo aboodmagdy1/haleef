@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Next-gen Arabic Tech Landing Page",
 };
 
+import LenisProvider from "@/components/LenisProvider";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -35,10 +37,12 @@ export default async function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${ibmPlexArabic.className} antialiased bg-background text-text-main`}>
-        <Toaster position="bottom-left" richColors />
-        <FloatingNav logoUrl={logoUrl} />
-        {children}
-        <WhatsAppButton phoneNumber="0559250966" />
+        <LenisProvider>
+          <Toaster position="bottom-left" richColors />
+          <FloatingNav logoUrl={logoUrl} />
+          {children}
+          <WhatsAppButton phoneNumber="0559250966" />
+        </LenisProvider>
       </body>
     </html>
   );
