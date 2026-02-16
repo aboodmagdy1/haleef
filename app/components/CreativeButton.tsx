@@ -58,13 +58,21 @@ const CreativeButton: React.FC<CreativeButtonProps> = ({
   };
 
   const handleSmoothScroll = (e: React.MouseEvent) => {
-    if (href?.startsWith("#") && lenis) {
+    if (href?.startsWith("#")) {
       e.preventDefault();
-      lenis.scrollTo(href, {
-        offset: -80,
-        duration: 2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
+      if (lenis) {
+        lenis.scrollTo(href, {
+          offset: -80,
+          duration: 2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        const targetId = href.replace("#", "");
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
     }
     if (onClick) onClick(e as any);
   };

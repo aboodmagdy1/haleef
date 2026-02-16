@@ -1,6 +1,6 @@
 import nextDynamic from "next/dynamic";
 import HeroSection from "./components/HeroSection";
-import ReactLenis from "lenis/react";
+import LenisProvider from "@/components/LenisProvider";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -21,7 +21,6 @@ const ProjectsSection = nextDynamic(() => import("./components/ProjectsSection")
 const AboutSection = nextDynamic(() => import("./components/AboutSection"), { ssr: true });
 const ContactSection = nextDynamic(() => import("./components/ContactSection"), { ssr: true });
 const Footer = nextDynamic(() => import("./components/Footer"), { ssr: true });
-const LandscapeGuard = nextDynamic(() => import("./components/LandscapeGuard"), { ssr: true });
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -63,17 +62,17 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[var(--color-background)] relative">
-      <LandscapeGuard />
-      <ReactLenis root />
-      <HeroSection data={hero} />
-      <ConflictSection data={conflict} />
-      <ConvergenceSection />
-      <SolutionsSection data={services} />
-      <ProjectsSection data={projects} />
-      <AboutSection data={about} />
-      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
-      <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
-    </main>
+    <LenisProvider>
+      <main className="min-h-screen overflow-hidden bg-[var(--color-background)] relative">
+        <HeroSection data={hero} />
+        <ConflictSection data={conflict} />
+        <ConvergenceSection />
+        <SolutionsSection data={services} />
+        <ProjectsSection data={projects} />
+        <AboutSection data={about} />
+        <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
+        <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
+      </main>
+    </LenisProvider>
   );
 }

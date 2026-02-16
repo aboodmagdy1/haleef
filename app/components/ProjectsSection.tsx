@@ -296,9 +296,16 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                       href={project.link || "#contact"}
                       target={project.link ? "_blank" : "_self"}
                       onClick={(e) => {
-                        if (!project.link && lenis) {
+                        if (!project.link) {
                           e.preventDefault();
-                          lenis.scrollTo("#contact", { offset: -80 });
+                          if (lenis) {
+                            lenis.scrollTo("#contact", { offset: -80 });
+                          } else {
+                            const element = document.getElementById("contact");
+                            if (element) {
+                              element.scrollIntoView({ behavior: "smooth" });
+                            }
+                          }
                         }
                       }}
                       className={`group flex items-center gap-3 px-8 py-4 rounded-full border-2 font-bold transition-all duration-300 ${isDark ? "border-white text-white hover:bg-white hover:text-black" : "border-[#0A2463] text-[#0A2463] hover:bg-[#0A2463] hover:text-white"}`}

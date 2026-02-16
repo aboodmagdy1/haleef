@@ -35,12 +35,12 @@ interface ConflictSectionProps {
 
 const HeaderContent = ({ title, description }: { title: string; description: string }) => (
   <div className="flex flex-col items-center justify-center text-center px-4">
-    <div className="flex items-center gap-2 mb-4 text-[#3E92CC] font-bold tracking-wider text-sm uppercase">
+    <div className="flex items-center gap-2 mb-1 text-[#3E92CC] font-bold tracking-wider text-sm uppercase">
       <span className="w-8 h-[2px] bg-[#3E92CC]"></span>
       01 — التحدي
     </div>
 
-    <div className="overflow-hidden relative mb-4">
+    <div className="overflow-hidden relative mb-1">
       <SplitText
         text={title}
         className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight text-[#3e92cc] leading-tight inline-block drop-shadow-sm"
@@ -86,7 +86,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
   return (
     <section
       id="challenge"
-      className="relative w-full lg:min-h-fit min-h-[115dvh] bg-slate-50 text-[#0A2463] overflow-hidden -mt-px"
+      className="relative w-full lg:min-h-fit min-h-[100dvh] bg-slate-50 text-[#0A2463] overflow-hidden -mt-px"
     >
       <style jsx global>{`
         .split-word {
@@ -97,7 +97,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
       `}</style>
 
       {/* Bottom Gemini Effect & Button */}
-      <div className="absolute bottom-[-24dvh] left-0 w-full  h-[76dvh] pointer-events-none ">
+      <div className="absolute bottom-[-24dvh] left-0 w-full  h-[95dvh] pointer-events-none ">
         <GoogleGeminiEffect className="w-full h-full">
           <div className="pointer-events-auto mt-15 z-10">
             <CreativeButton
@@ -111,7 +111,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
         </GoogleGeminiEffect>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-24 pointer-events-none">
+      <div className="container mx-auto px-4 relative z-10  pointer-events-none">
         {/* ================= DESKTOP LAYOUT (Grid) ================= */}
         <div className="hidden md:grid grid-cols-4 gap-8 h-[70dvh] items-center">
           {/* Left: Problems Vertical Loop */}
@@ -150,7 +150,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
         </div>
 
         {/* ================= MOBILE LAYOUT (Stack) ================= */}
-        <div className="flex md:hidden flex-col items-center justify-center min-h-[70dvh] w-full pb-20 relative gap-4">
+        <div className="flex md:hidden flex-col items-center justify-center min-h-[70dvh] w-full pb-20 relative ">
           {/* 1. Problems Loop - Red */}
           <div dir="ltr" className="w-full relative py-2 pointer-events-auto">
             <LogoLoop logos={problems} speed={30} direction="left" gap={16} className="py-2" />
@@ -159,7 +159,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
           {/* Vertical Line Connection (Between Problems and Gap) */}
           <div className="flex flex-col items-center opacity-40 shrink-0">
             <div className="w-2 h-2 bg-red-400 rounded-full mb-1"></div>
-            <div className="w-[2px] h-16 bg-linear-to-b from-red-400 to-[#3E92CC]"></div>
+            <div className="w-[2px] h-10 bg-linear-to-b from-red-400 to-[#3E92CC]"></div>
           </div>
 
           {/* 2. Header Text - The Gap (The Bridge) */}
@@ -170,7 +170,7 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
 
           {/* Vertical Line Connection (Between Gap and Solutions) */}
           <div className="flex flex-col items-center opacity-40 shrink-0">
-            <div className="w-[2px] h-16 bg-linear-to-b from-[#3E92CC] to-blue-400"></div>
+            <div className="w-[2px] h-10 bg-linear-to-b from-[#3E92CC] to-blue-400"></div>
             <div className="w-2 h-2 bg-blue-400 rounded-full mt-1"></div>
           </div>
 

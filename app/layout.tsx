@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import FloatingNav from "./components/FloatingNav";
+import WhatsAppButton from "./components/WhatsAppButton";
 import { client } from "@/sanity/lib/client";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
         <Toaster position="bottom-left" richColors />
         <FloatingNav logoUrl={logoUrl} />
         {children}
+        <WhatsAppButton phoneNumber="0559250966" />
       </body>
     </html>
   );

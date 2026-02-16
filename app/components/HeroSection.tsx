@@ -146,8 +146,8 @@ export default function HeroSection({ data }: HeroSectionProps) {
         {/* Left Arm (Robot) */}
         <div
           ref={leftArmRef}
-          className="absolute left-[-12%] md:left-[-7vw] w-[65vw] md:w-[55vw] h-[35dvh] flex items-center justify-end z-20"
-          style={{ top: "35%", transform: "translateY(-35%)" }}
+          className="absolute left-[-8vw] md:left-[-5vw] w-[58vw] md:w-[55vw] h-[35dvh] flex items-center justify-end z-20"
+          style={{ top: "32vh", transform: "translateY(-35%)" }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -163,8 +163,8 @@ export default function HeroSection({ data }: HeroSectionProps) {
         {/* Right Arm (Man) */}
         <div
           ref={rightArmRef}
-          className="absolute right-[-12%] md:right-[-7vw] w-[65vw] md:w-[55vw] h-[35dvh] flex items-center justify-start z-10"
-          style={{ top: "35%", transform: "translateY(-35%)" }}
+          className="absolute right-[-8vw] md:right-[-5vw] w-[58vw] md:w-[55vw] h-[35dvh] flex items-center justify-start z-10"
+          style={{ top: "32vh", transform: "translateY(-35%)" }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -186,11 +186,13 @@ export default function HeroSection({ data }: HeroSectionProps) {
         <div className="overflow-hidden">
           <SplitText
             text={content.title}
-            className="text-4xl sm:text-6xl md:text-8xl font-bold text-[#0A2463] tracking-tight inline-block drop-shadow-sm pb-2"
+            className="text-[clamp(50px,6vw,11vw)] font-bold text-[#0A2463] tracking-tight inline-block drop-shadow-sm pb-2"
             delay={0}
             duration={1.3}
             splitType="words"
-            spanclassname="!pb-6"
+            spanclassname="pb-3 lg:pb-6"
+            threshold={0}
+            rootMargin="100%"
             from={{ y: 120 }}
             to={{ y: 0 }}
           />
@@ -199,10 +201,12 @@ export default function HeroSection({ data }: HeroSectionProps) {
         <div className="max-w-2xl mx-auto overflow-hidden" style={{ direction: "rtl" }}>
           <SplitText
             text={content.subtitle}
-            className="text-[#0A2463]  mt-2 text-sm sm:text-lg md:text-2xl font-semibold leading-relaxed inline-block"
-            delay={100}
+            className="text-[#0A2463] text-[clamp(14px,1.5vw,22px)] font-semibold leading-relaxed inline-block"
+            delay={50}
             duration={0.5}
             splitType="words"
+            threshold={0}
+            rootMargin="100%"
             from={{ opacity: 0, y: 30 }}
             to={{ opacity: 1, y: 0 }}
           />
