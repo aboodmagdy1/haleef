@@ -22,8 +22,10 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
   const lenis = useLenis();
 
   const handleScroll = (e: React.MouseEvent<HTMLElement> | React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
     setIsMenuOpen(false);
+    if (!id.startsWith("#")) return;
+
+    e.preventDefault();
     if (lenis) {
       lenis.scrollTo(id, {
         offset: -50,
