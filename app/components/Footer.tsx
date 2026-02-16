@@ -4,6 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Github, Linkedin, Twitter, Instagram, Phone, FileText } from "lucide-react";
 import { useLenis } from "lenis/react";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 export interface FooterData {
   slogan: string[];
@@ -18,7 +22,7 @@ export interface FooterData {
 const defaultFooterData: FooterData = {
   slogan: ["تصميم.", "برمجة.", "محتوى."],
   navLinks: [
-    { label: "عن حليف", href: "#about" },
+    { label: "من نحن", href: "/about" },
     { label: "خدماتنا", href: "#services" },
     { label: "أعمالنا", href: "#projects" },
     { label: "تواصل معنا", href: "#contact" },
@@ -97,25 +101,28 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
   const handleScroll = (e: React.MouseEvent, href: string) => {
     if (href.startsWith("#")) {
       e.preventDefault();
+
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+
+      if (!element) {
+        window.location.href = `/${href}`;
+        return;
+      }
+
+      const offset = 80;
       if (lenis) {
         lenis.scrollTo(href, {
-          offset: -50,
-          duration: 1.5,
+          offset: -offset,
+          duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
       } else {
-        const targetId = href.replace("#", "");
-        const element = document.getElementById(targetId);
-        if (element) {
-          const offset = 80;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-        }
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: "smooth",
+        });
       }
     }
   };

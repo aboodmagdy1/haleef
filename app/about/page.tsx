@@ -5,6 +5,7 @@ import Footer from "@/app/components/Footer";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import CreativeButton from "@/app/components/CreativeButton";
+import { urlForImage } from "@/sanity/lib/image";
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +51,38 @@ export default async function AboutPage() {
 
             <div className="prose prose-lg max-w-none text-[#0A2463]">
               <div className="text-xl leading-relaxed font-medium space-y-6">
-                <PortableText value={data.content} />
+                <PortableText
+                  value={data.content}
+                  components={{
+                    types: {
+                      image: ({ value }: any) => {
+                        if (!value?.asset?._ref) return null;
+                        return (
+                          <div className="relative w-full aspect-video my-8 rounded-3xl overflow-hidden shadow-lg">
+                            <Image
+                              src={urlForImage(value).url() || ""}
+                              alt="Content Image"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        );
+                      },
+                    },
+                    block: {
+                      h2: ({ children }) => (
+                        <h2 className="text-3xl font-black text-[#0A2463] mt-12 mb-6">{children}</h2>
+                      ),
+                      h3: ({ children }) => (
+                        <h3 className="text-2xl font-black text-[#3E92CC] mt-8 mb-4">{children}</h3>
+                      ),
+                      normal: ({ children }) => <p className="mb-4">{children}</p>,
+                    },
+                    list: {
+                      bullet: ({ children }) => <ul className="list-disc list-inside space-y-2 mb-6">{children}</ul>,
+                    },
+                  }}
+                />
               </div>
 
               <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
