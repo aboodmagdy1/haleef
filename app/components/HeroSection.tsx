@@ -41,20 +41,27 @@ export default function HeroSection({ data }: HeroSectionProps) {
   useGSAP(
     () => {
       // 0. Entrance Animation (Arms pop in after text)
-      gsap.from(leftArmRef.current, {
-        x: -150,
-        opacity: 0,
+      gsap.to(leftArmRef.current, {
+        x: 0,
+        opacity: 1,
         duration: 1,
         delay: 0.6,
         ease: "back.out(1.7)",
       });
 
-      gsap.from(rightArmRef.current, {
-        x: 150,
-        opacity: 0,
+      gsap.to(rightArmRef.current, {
+        x: 0,
+        opacity: 1,
         duration: 1,
         delay: 0.6,
         ease: "back.out(1.7)",
+      });
+
+      // Fade in text containers immediately
+      gsap.to(".hero-title-container, .hero-subtitle-container", {
+        opacity: 1,
+        duration: 0.1,
+        stagger: 0.05,
       });
 
       const tl = gsap.timeline({
@@ -146,8 +153,8 @@ export default function HeroSection({ data }: HeroSectionProps) {
         {/* Left Arm (Robot) */}
         <div
           ref={leftArmRef}
-          className="absolute left-[-8vw] md:left-[-5vw] w-[58vw] md:w-[55vw] h-[35dvh] flex items-center justify-end z-20"
-          style={{ top: "32vh", transform: "translateY(-35%)" }}
+          className="absolute left-[-8vw] md:left-[-5vw] w-[58vw] md:w-[55vw] h-[35dvh] flex items-center justify-end z-20 opacity-0"
+          style={{ top: "32vh", transform: "translateY(-35%) translateX(-150px)" }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -163,8 +170,8 @@ export default function HeroSection({ data }: HeroSectionProps) {
         {/* Right Arm (Man) */}
         <div
           ref={rightArmRef}
-          className="absolute right-[-8vw] md:right-[-5vw] w-[58vw] md:w-[55vw] h-[35dvh] flex items-center justify-start z-10"
-          style={{ top: "32vh", transform: "translateY(-35%)" }}
+          className="absolute right-[-8vw] md:right-[-5vw] w-[58vw] md:w-[55vw] h-[35dvh] flex items-center justify-start z-10 opacity-0"
+          style={{ top: "32vh", transform: "translateY(-35%) translateX(150px)" }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -183,7 +190,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         ref={titleRef}
         className="absolute bottom-[10%] md:bottom-[4%] w-full text-center z-20 flex flex-col items-center px-4"
       >
-        <div className="overflow-hidden">
+        <div className="overflow-hidden opacity-0 hero-title-container">
           <SplitText
             text={content.title}
             className="text-[clamp(50px,6vw,11vw)] font-bold text-[#0A2463] tracking-tight inline-block drop-shadow-sm pb-2"
@@ -193,12 +200,15 @@ export default function HeroSection({ data }: HeroSectionProps) {
             spanclassname="pb-3 lg:pb-6"
             threshold={0}
             rootMargin="100%"
-            from={{ y: 120 }}
-            to={{ y: 0 }}
+            from={{ y: 120, opacity: 0 }}
+            to={{ y: 0, opacity: 1 }}
           />
         </div>
 
-        <div className="max-w-2xl mx-auto overflow-hidden" style={{ direction: "rtl" }}>
+        <div
+          className="max-w-2xl mx-auto overflow-hidden opacity-0 hero-subtitle-container"
+          style={{ direction: "rtl" }}
+        >
           <SplitText
             text={content.subtitle}
             className="text-[#0A2463] text-[clamp(14px,1.5vw,22px)] font-semibold leading-relaxed inline-block"
