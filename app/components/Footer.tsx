@@ -132,15 +132,9 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           {/* Logo */}
           <div className="shrink-0">
-            <Link href="/" className="inline-block group">
+            <Link href="/" className="inline-block relative w-32 md:w-32  h-14 group">
               {logoUrl ? (
-                <Image
-                  src={logoUrl}
-                  alt="حليف"
-                  width={140}
-                  height={56}
-                  className="h-10 md:h-14 w-auto object-contain"
-                />
+                <Image src={logoUrl} alt="حليف" fill className="object-cover object-right" />
               ) : (
                 <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-[#0A2463] transition-colors duration-300">
                   حليف<span className="text-[#3E92CC]">.</span>

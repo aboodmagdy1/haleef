@@ -108,10 +108,25 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
         className="pointer-events-auto flex items-center justify-between gap-4 md:gap-12 px-4 py-2 md:px-8 md:py-4 rounded-full bg-transparent md:bg-white/40 md:backdrop-blur-xl md:border md:border-white/40 md:shadow-2xl md:shadow-slate-200/50 w-full md:w-auto mx-4 md:mx-0"
         style={{ willChange: "transform" }}
       >
-        {/* Mobile Sheet Trigger (Menu on Left) */}
+        {/* Logo (Logo on Right in RTL) */}
+        <div className="shrink-0">
+          <Link
+            href="#home"
+            onClick={(e: any) => handleScroll(e, "#home")}
+            className=" relative block w-32 md:w-32  h-14"
+          >
+            {logoUrl ? (
+              <Image src={logoUrl} alt="HALEIF" fill className="object-cover object-right" priority />
+            ) : (
+              <span className="text-xl md:text-2xl font-bold tracking-tighter text-[#0A2463]">HALEIF</span>
+            )}
+          </Link>
+        </div>
+
+        {/* Mobile Sheet Trigger (Menu on Left in RTL) */}
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
-            <button className="md:hidden p-2 rounded-full text-[#0A2463] bg-white/80 shadow-sm border border-slate-100 transition-all duration-300">
+            <button className="md:hidden p-2 rounded-full text-[#0A2463] bg-white/80 shadow-sm border border-slate-100 transition-all duration-300 hover:bg-white active:scale-95">
               <Menu size={24} />
             </button>
           </SheetTrigger>
@@ -119,7 +134,9 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
             <SheetHeader className="p-6 border-b border-slate-50">
               <SheetTitle className="flex items-center justify-between">
                 {logoUrl ? (
-                  <Image src={logoUrl} alt="HALEIF" width={100} height={36} className="h-8 w-auto object-contain" />
+                  <div className="relative h-10 w-32">
+                    <Image src={logoUrl} alt="HALEIF" fill className="object-contain object-right" />
+                  </div>
                 ) : (
                   <span className="text-xl font-bold tracking-tighter text-[#0A2463]">HALEIF</span>
                 )}
@@ -166,17 +183,6 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
             </div>
           </SheetContent>
         </Sheet>
-
-        {/* Logo (Logo on Right via justify-between) */}
-        <div className="shrink-0">
-          <Link href="#home" onClick={(e: any) => handleScroll(e, "#home")} className="flex items-center">
-            {logoUrl ? (
-              <Image src={logoUrl} alt="HALEIF" width={100} height={36} className="h-6 md:h-8 w-auto object-contain" />
-            ) : (
-              <span className="text-xl md:text-2xl font-bold tracking-tighter text-[#0A2463]">HALEIF</span>
-            )}
-          </Link>
-        </div>
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-6 text-[#0A2463]/80 font-medium">

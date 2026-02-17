@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Sparkles, Palette, Smartphone, ShoppingBag, ArrowLeft, Code } from "lucide-react";
+import { Sparkles, Palette, Smartphone, ShoppingBag, ArrowLeft, Code, Globe } from "lucide-react";
 import CreativeButton from "./CreativeButton";
 import InfiniteMarquee from "./InfiniteMarquee";
 
@@ -22,6 +22,8 @@ const getIcon = (iconName: string, className: string) => {
       return <ShoppingBag className={className} />;
     case "code":
       return <Code className={className} />;
+    case "globe":
+      return <Globe className={className} />;
     default:
       return <Smartphone className={className} />;
   }
@@ -95,6 +97,7 @@ interface SolutionsSectionProps {
 }
 
 const SolutionsSection = ({ data }: SolutionsSectionProps) => {
+  console.log(data);
   const services = data && data.length > 0 ? data : defaultServices;
   const sectionRef = useRef<HTMLElement>(null);
   const pinContainerRef = useRef<HTMLDivElement>(null);
@@ -323,6 +326,13 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
           </div>
         </div>
       </div>
+
+      {/* 
+        Tailwind 4 Class Triggers: 
+        Since these classes come from Sanity dynamically, we need to 'mention' them 
+        here so the compiler includes them in the bundle.
+      */}
+      <div className="hidden bg-sky-50 border-sky-200 text-sky-900 bg-sky-500 bg-indigo-50 border-indigo-200 text-indigo-900 bg-indigo-500 bg-rose-50 border-rose-200 text-rose-900 bg-rose-500 bg-amber-50 border-amber-200 text-amber-900 bg-amber-500 bg-emerald-50 border-emerald-200 text-emerald-900 bg-emerald-500" />
     </section>
   );
 };
