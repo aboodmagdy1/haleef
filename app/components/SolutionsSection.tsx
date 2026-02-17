@@ -3,28 +3,68 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Sparkles, Palette, Smartphone, ShoppingBag, ArrowLeft, Code } from "lucide-react";
+import {
+  Sparkles,
+  Palette,
+  Smartphone,
+  ShoppingBag,
+  ArrowLeft,
+  Code,
+  Globe,
+  Monitor,
+  Layout,
+  PenTool,
+  Search,
+  TrendingUp,
+  Shield,
+  Zap,
+  Rocket,
+  Users,
+  Heart,
+  Star,
+  Settings,
+  Database,
+  Cloud,
+  Lock,
+  BarChart,
+  Megaphone,
+  Target,
+} from "lucide-react";
 import CreativeButton from "./CreativeButton";
 import InfiniteMarquee from "./InfiniteMarquee";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Helper to map icon names to components
+const iconComponents: Record<string, React.FC<{ className?: string }>> = {
+  smartphone: Smartphone,
+  palette: Palette,
+  sparkles: Sparkles,
+  shoppingbag: ShoppingBag,
+  code: Code,
+  globe: Globe,
+  monitor: Monitor,
+  layout: Layout,
+  pentool: PenTool,
+  search: Search,
+  trendingup: TrendingUp,
+  shield: Shield,
+  zap: Zap,
+  rocket: Rocket,
+  users: Users,
+  heart: Heart,
+  star: Star,
+  settings: Settings,
+  database: Database,
+  cloud: Cloud,
+  lock: Lock,
+  barchart: BarChart,
+  megaphone: Megaphone,
+  target: Target,
+};
+
 const getIcon = (iconName: string, className: string) => {
-  switch (iconName?.toLowerCase()) {
-    case "smartphone":
-      return <Smartphone className={className} />;
-    case "palette":
-      return <Palette className={className} />;
-    case "sparkles":
-      return <Sparkles className={className} />;
-    case "shoppingbag":
-      return <ShoppingBag className={className} />;
-    case "code":
-      return <Code className={className} />;
-    default:
-      return <Smartphone className={className} />;
-  }
+  const Icon = iconComponents[iconName?.toLowerCase()] || Smartphone;
+  return <Icon className={className} />;
 };
 
 export interface ServiceData {
@@ -98,6 +138,19 @@ export const defaultServices: ServiceData[] = [
     text: "text-emerald-900",
     dot: "bg-emerald-500",
   },
+  // مواقع إلكترونية
+  {
+    id: 5,
+    title: "مواقع إلكترونية",
+    description:
+      "موقعك على الويب هو النقطة الأولى للعميل ليطوعها. نصمم ونبرمج مواقع إلكترونية متطورة تميزك في السوق وتعكس احترافيتك من أول نظرة.",
+    features: ["إبراز منتجاتك", "تسويق مباشر", "تحليل الأداء"],
+    iconName: "globe",
+    bg: "bg-sky-50",
+    border: "border-sky-200",
+    text: "text-sky-900",
+    dot: "bg-sky-500",
+  }
 ];
 
 const defaultIntro: SolutionsIntroData = {
