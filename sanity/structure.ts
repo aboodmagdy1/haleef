@@ -5,13 +5,14 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("Content")
     .items([
-      // Show Site Settings as a singleton (single editable document)
       S.listItem()
         .title("Site Settings")
         .child(S.document().schemaType("siteSettings").documentId("siteSettings")),
+      S.listItem()
+        .title("Solutions Section Intro")
+        .child(S.document().schemaType("solutionsIntro").documentId("solutionsIntro")),
       S.divider(),
-      // Show all other document types as normal lists
       ...S.documentTypeListItems().filter(
-        (listItem) => !["siteSettings"].includes(listItem.getId()!)
+        (listItem) => !["siteSettings", "solutionsIntro"].includes(listItem.getId()!)
       ),
     ]);

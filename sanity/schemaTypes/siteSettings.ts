@@ -14,5 +14,11 @@ export default defineType({
         hotspot: true,
       },
     }),
+    defineField({
+      name: "whatsappNumber",
+      title: "WhatsApp Number",
+      type: "string",
+      description: "رقم الواتساب مع كود الدولة (مثال: +966559250966)",
+    }),
   ],
 });

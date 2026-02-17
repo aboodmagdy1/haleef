@@ -119,7 +119,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
             <SheetHeader className="p-6 border-b border-slate-50">
               <SheetTitle className="flex items-center justify-between">
                 {logoUrl ? (
-                  <Image src={logoUrl} alt="HALEIF" width={100} height={36} className="h-8 w-auto object-contain" />
+                  <Image src={logoUrl} alt="HALEIF" width={200} height={64} className="h-12 w-auto object-contain" />
                 ) : (
                   <span className="text-xl font-bold tracking-tighter text-[#0A2463]">HALEIF</span>
                 )}
@@ -171,7 +171,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
         <div className="shrink-0">
           <Link href="#home" onClick={(e: any) => handleScroll(e, "#home")} className="flex items-center">
             {logoUrl ? (
-              <Image src={logoUrl} alt="HALEIF" width={100} height={36} className="h-6 md:h-8 w-auto object-contain" />
+              <Image src={logoUrl} alt="HALEIF" width={400} height={80} className="h-14 md:h-16 w-auto object-contain" />
             ) : (
               <span className="text-xl md:text-2xl font-bold tracking-tighter text-[#0A2463]">HALEIF</span>
             )}

@@ -75,16 +75,32 @@ export const contactQuery = groq`*[_type == "contact"][0]{
 
 export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
   _id,
-  "logoUrl": logo.asset->url
+  "logoUrl": logo.asset->url,
+  whatsappNumber
+}`;
+
+export const solutionsIntroQuery = groq`*[_type == "solutionsIntro"][0]{
+  _id,
+  sectionLabel,
+  title,
+  titleHighlight,
+  subtitle,
+  paragraphs,
+  ctaText,
+  ctaLink
 }`;
 
 export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
   _id,
-  title,
   heroTitle,
   heroSubtitle,
   content,
-  vision,
-  mission,
-  "imageUrl": image.asset->url
+  "imageUrl": image.asset->url,
+  featuresTitle,
+  features,
+  valuesTitle,
+  values,
+  ctaTitle,
+  ctaSubtitle,
+  ctaButtonText
 }`;

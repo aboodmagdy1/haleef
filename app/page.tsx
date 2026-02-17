@@ -10,6 +10,7 @@ import {
   footerQuery,
   contactQuery,
   siteSettingsQuery,
+  solutionsIntroQuery,
 } from "@/sanity/lib/queries";
 import { projectId } from "@/sanity/env";
 
@@ -33,10 +34,11 @@ export default async function Home() {
   let footer = null;
   let contact = null;
   let siteSettings = null;
+  let solutionsIntro = null;
 
   if (projectId) {
     try {
-      const [projectsData, servicesData, heroData, aboutData, conflictData, footerData, contactData, siteSettingsData] =
+      const [projectsData, servicesData, heroData, aboutData, conflictData, footerData, contactData, siteSettingsData, solutionsIntroData] =
         await Promise.all([
           client.fetch(projectsQuery),
           client.fetch(servicesQuery),
@@ -46,6 +48,7 @@ export default async function Home() {
           client.fetch(footerQuery),
           client.fetch(contactQuery),
           client.fetch(siteSettingsQuery),
+          client.fetch(solutionsIntroQuery),
         ]);
       projects = projectsData;
       services = servicesData;
@@ -55,6 +58,7 @@ export default async function Home() {
       footer = footerData;
       contact = contactData;
       siteSettings = siteSettingsData;
+      solutionsIntro = solutionsIntroData;
     } catch (error) {
       console.error("Sanity fetch error:", error);
     }
@@ -65,7 +69,7 @@ export default async function Home() {
       <HeroSection data={hero} />
       <ConflictSection data={conflict} />
       <ConvergenceSection />
-      <SolutionsSection data={services} />
+      <SolutionsSection data={services} introData={solutionsIntro} />
       <ProjectsSection data={projects} />
       <AboutSection data={about} />
       <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
