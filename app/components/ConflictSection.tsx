@@ -97,9 +97,9 @@ const ConflictSection: React.FC<ConflictSectionProps> = ({ data }) => {
       `}</style>
 
       {/* Bottom Gemini Effect & Button */}
-      <div className="absolute bottom-[-30dvh] md:bottom-[-24dvh] left-0 w-full h-[91dvh] md:h-[97dvh] pointer-events-none ">
+      <div className="absolute bottom-[-30dvh] md:bottom-[-24dvh] left-0 w-full h-[91dvh] md:h-[97dvh] pointer-events-none mt-5 ">
         <GoogleGeminiEffect className="w-full h-full">
-          <div className="pointer-events-auto mt-15 z-10">
+          <div className="pointer-events-auto mt-30 z-10">
             <CreativeButton
               text="ابحث عن حل"
               variant="primary"

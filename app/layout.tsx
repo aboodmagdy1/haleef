@@ -27,9 +27,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let logoUrl: string | null = null;
+  let whatsappNumber = "+966559250966";
   try {
     const settings = await client.fetch(siteSettingsQuery);
     logoUrl = settings?.logoUrl || null;
+    if (settings?.whatsappNumber) {
+      whatsappNumber = settings.whatsappNumber;
+    }
   } catch (e) {
     console.error("Failed to fetch site settings:", e);
   }
@@ -41,7 +45,7 @@ export default async function RootLayout({
           <Toaster position="bottom-left" richColors />
           <FloatingNav logoUrl={logoUrl} />
           {children}
-          <WhatsAppButton phoneNumber="0559250966" />
+          <WhatsAppButton phoneNumber={whatsappNumber} />
         </LenisProvider>
       </body>
     </html>

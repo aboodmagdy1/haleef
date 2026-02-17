@@ -8,7 +8,6 @@ import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
 import { Menu } from "lucide-react";
 import CreativeButton from "./CreativeButton";
-import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 /**

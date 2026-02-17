@@ -3,30 +3,68 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Sparkles, Palette, Smartphone, ShoppingBag, ArrowLeft, Code, Globe } from "lucide-react";
+import {
+  Sparkles,
+  Palette,
+  Smartphone,
+  ShoppingBag,
+  ArrowLeft,
+  Code,
+  Globe,
+  Monitor,
+  Layout,
+  PenTool,
+  Search,
+  TrendingUp,
+  Shield,
+  Zap,
+  Rocket,
+  Users,
+  Heart,
+  Star,
+  Settings,
+  Database,
+  Cloud,
+  Lock,
+  BarChart,
+  Megaphone,
+  Target,
+} from "lucide-react";
 import CreativeButton from "./CreativeButton";
 import InfiniteMarquee from "./InfiniteMarquee";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Helper to map icon names to components
+const iconComponents: Record<string, React.FC<{ className?: string }>> = {
+  smartphone: Smartphone,
+  palette: Palette,
+  sparkles: Sparkles,
+  shoppingbag: ShoppingBag,
+  code: Code,
+  globe: Globe,
+  monitor: Monitor,
+  layout: Layout,
+  pentool: PenTool,
+  search: Search,
+  trendingup: TrendingUp,
+  shield: Shield,
+  zap: Zap,
+  rocket: Rocket,
+  users: Users,
+  heart: Heart,
+  star: Star,
+  settings: Settings,
+  database: Database,
+  cloud: Cloud,
+  lock: Lock,
+  barchart: BarChart,
+  megaphone: Megaphone,
+  target: Target,
+};
+
 const getIcon = (iconName: string, className: string) => {
-  switch (iconName?.toLowerCase()) {
-    case "smartphone":
-      return <Smartphone className={className} />;
-    case "palette":
-      return <Palette className={className} />;
-    case "sparkles":
-      return <Sparkles className={className} />;
-    case "shoppingbag":
-      return <ShoppingBag className={className} />;
-    case "code":
-      return <Code className={className} />;
-    case "globe":
-      return <Globe className={className} />;
-    default:
-      return <Smartphone className={className} />;
-  }
+  const IconComponent = iconComponents[iconName?.toLowerCase()] || Smartphone;
+  return <IconComponent className={className} />;
 };
 
 export interface ServiceData {
@@ -34,11 +72,21 @@ export interface ServiceData {
   title: string;
   description: string;
   features: string[];
-  iconName: string; // From Sanity
+  iconName: string;
   bg: string;
   border: string;
   text: string;
   dot: string;
+}
+
+export interface SolutionsIntroData {
+  sectionLabel?: string;
+  title?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  paragraphs?: string[];
+  ctaText?: string;
+  ctaLink?: string;
 }
 
 export const defaultServices: ServiceData[] = [
@@ -90,15 +138,42 @@ export const defaultServices: ServiceData[] = [
     text: "text-emerald-900",
     dot: "bg-emerald-500",
   },
+  // مواقع إلكترونية
+  {
+    id: 5,
+    title: "مواقع إلكترونية",
+    description:
+      "موقعك على الويب هو النقطة الأولى للعميل ليطوعها. نصمم ونبرمج مواقع إلكترونية متطورة تميزك في السوق وتعكس احترافيتك من أول نظرة.",
+    features: ["إبراز منتجاتك", "تسويق مباشر", "تحليل الأداء"],
+    iconName: "globe",
+    bg: "bg-sky-50",
+    border: "border-sky-200",
+    text: "text-sky-900",
+    dot: "bg-sky-500",
+  },
 ];
+
+const defaultIntro: SolutionsIntroData = {
+  sectionLabel: "02 — الحل",
+  title: "كيف نصنع",
+  titleHighlight: "الفرق؟",
+  subtitle: "الأمر بسيط.. نحن نهتم بالتفاصيل التي لا يراها غيرنا.",
+  paragraphs: [
+    "أنا أتولى الهيكل، التصميم، والتنفيذ، وأحرص في النهاية أن كل شيء يعمل تماماً كما تمنيت.",
+    "نحول الأفكار المعقدة إلى حلول رقمية بسيطة، جذابة، وقابلة للنمو.",
+  ],
+  ctaText: "احجز استشارتك المجانية",
+  ctaLink: "#contact",
+};
 
 interface SolutionsSectionProps {
   data?: ServiceData[];
+  introData?: SolutionsIntroData | null;
 }
 
-const SolutionsSection = ({ data }: SolutionsSectionProps) => {
-  console.log(data);
+const SolutionsSection = ({ data, introData }: SolutionsSectionProps) => {
   const services = data && data.length > 0 ? data : defaultServices;
+  const intro = introData || defaultIntro;
   const sectionRef = useRef<HTMLElement>(null);
   const pinContainerRef = useRef<HTMLDivElement>(null);
   const leftContentRef = useRef<HTMLDivElement>(null);
@@ -247,27 +322,26 @@ const SolutionsSection = ({ data }: SolutionsSectionProps) => {
                 <div className="border-r-2 md:border-r-4 border-blue-600 pr-4 md:pr-6 mb-[calc(min(2rem,4vh))]">
                   <div className="flex items-center gap-2 mb-2 text-blue-600 font-bold tracking-wider text-xs md:text-sm uppercase">
                     <span className="w-6 md:w-8 h-[2px] bg-blue-600"></span>
-                    02 — الحل
+                    {intro.sectionLabel}
                   </div>
                   <h2 className="text-3xl md:text-4xl lg:text-6xl font-black mb-3 md:mb-4 leading-tight">
-                    كيف نصنع <span className="text-blue-600">الفرق؟</span>
+                    {intro.title} <span className="text-blue-600">{intro.titleHighlight}</span>
                   </h2>
-                  <p className="text-base md:text-lg lg:text-xl text-slate-500 font-medium">
-                    الأمر بسيط.. نحن نهتم بالتفاصيل التي لا يراها غيرنا.
-                  </p>
+                  <p className="text-base md:text-lg lg:text-xl text-slate-500 font-medium">{intro.subtitle}</p>
                 </div>
                 <div className="space-y-[calc(min(1.5rem,3vh))] text-base md:text-lg text-slate-600 leading-relaxed max-w-lg mb-[calc(min(2.5rem,5vh))]">
-                  <p>أنا أتولى الهيكل، التصميم، والتنفيذ، وأحرص في النهاية أن كل شيء يعمل تماماً كما تمنيت.</p>
-                  <p>نحول الأفكار المعقدة إلى حلول رقمية بسيطة، جذابة، وقابلة للنمو.</p>
+                  {intro.paragraphs?.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                  ))}
                 </div>
                 <div>
                   <CreativeButton
-                    text="احجز استشارتك المجانية"
+                    text={intro.ctaText || "احجز استشارتك المجانية"}
                     icon={<ArrowLeft className="w-5 h-5" />}
                     variant="secondary"
                     reverse={true}
                     size="lg"
-                    href="#contact"
+                    href={intro.ctaLink || "#contact"}
                     className="w-full md:w-auto"
                   />
                 </div>
