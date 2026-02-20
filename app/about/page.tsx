@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { aboutPageQuery, siteSettingsQuery, footerQuery } from "@/sanity/lib/queries";
 import Footer from "@/app/components/Footer";
@@ -25,6 +26,22 @@ import {
   BookOpen,
   TrendingUp,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "من نحن — تعرّف على حليف تقني | About Haleef Tech",
+  description:
+    "تعرّف على حليف تقني، شريكك التقني في رحلة التحول الرقمي. نسعى لنقل خبراتنا التقنية العميقة إلى عملائنا ونبني مستقبلاً تقنياً يمكنك الوثوق به في السعودية.",
+  alternates: {
+    canonical: "https://www.haleeftech.com/about",
+  },
+  openGraph: {
+    title: "من نحن — تعرّف على حليف تقني | About Haleef Tech",
+    description:
+      "في حليف تقني نحن لا نبني أنظمة فقط.. نحن نبني مستقبلاً تقنياً يمكنك الوثوق به. شريكك الحقيقي في رحلة النجاح الرقمي.",
+    url: "https://www.haleeftech.com/about",
+    type: "website",
+  },
+};
 
 export const dynamic = "force-dynamic";
 

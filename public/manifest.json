@@ -1,0 +1,18 @@
+{
+  "name": "حليف تقني — Haleef Tech",
+  "short_name": "حليف تقني",
+  "description": "شركة تطوير برمجيات سعودية متخصصة في تصميم وبرمجة تطبيقات الجوال، المواقع الإلكترونية، المتاجر الإلكترونية، والتصميم الجرافيكي.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0A2463",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "/og-image.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
