@@ -1,6 +1,6 @@
 import { groq } from "next-sanity";
 
-export const projectsQuery = groq`*[_type == "project"]{
+export const projectsQuery = groq`*[_type == "project" && active == true] | order(order asc){
   "id": _id,
   "name": title,
   subtitle,

@@ -11,6 +11,21 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "order",
+      title: "Display Order",
+      type: "number",
+      description: "Lower numbers appear first",
+      initialValue: 0,
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: "active",
+      title: "Active",
+      type: "boolean",
+      description: "Only active projects will be displayed on the website",
+      initialValue: true,
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",

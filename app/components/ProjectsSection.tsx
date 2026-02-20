@@ -292,30 +292,19 @@ const ProjectsSection = ({ data }: ProjectsSectionProps) => {
                     {project.description}
                   </p>
 
-                  {/* CTA Button */}
-                  <div className="mb-2 md:mb-10">
-                    <Link
-                      href={project.link || "#contact"}
-                      target={project.link ? "_blank" : "_self"}
-                      onClick={(e) => {
-                        if (!project.link) {
-                          e.preventDefault();
-                          if (lenis) {
-                            lenis.scrollTo("#contact", { offset: -80 });
-                          } else {
-                            const element = document.getElementById("contact");
-                            if (element) {
-                              element.scrollIntoView({ behavior: "smooth" });
-                            }
-                          }
-                        }
-                      }}
-                      className={`group flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full border-2 font-bold transition-all duration-300 transform active:scale-95 ${isDark ? "border-white text-white hover:bg-white hover:text-black" : "border-[#0A2463] text-[#0A2463] hover:bg-[#0A2463] hover:text-white"}`}
-                    >
-                      <span className="text-sm md:text-base">مشاهدة المشروع</span>
-                      <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
+                  {/* CTA Button - only show when project has a link */}
+                  {project.link && (
+                    <div className="mb-2 md:mb-10">
+                      <Link
+                        href={project.link}
+                        target="_blank"
+                        className={`group flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full border-2 font-bold transition-all duration-300 transform active:scale-95 ${isDark ? "border-white text-white hover:bg-white hover:text-black" : "border-[#0A2463] text-[#0A2463] hover:bg-[#0A2463] hover:text-white"}`}
+                      >
+                        <span className="text-sm md:text-base">مشاهدة المشروع</span>
+                        <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
