@@ -104,3 +104,82 @@ export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
   ctaSubtitle,
   ctaButtonText
 }`;
+
+// ── Service queries ──
+export const allServicesWithSlugQuery = groq`*[_type == "service"] | order(order asc){
+  _id,
+  title,
+  "slug": coalesce(slug.current, _id),
+  description,
+  features,
+  "iconName": icon
+}`;
+
+export const serviceBySlugQuery = groq`*[_type == "service" && slug.current == $slug][0]{
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  longDescription,
+  seoTitle,
+  seoDescription,
+  "heroImageUrl": heroImage.asset->url,
+  features,
+  "iconName": icon
+}`;
+
+export const allServiceSlugsQuery = groq`*[_type == "service" && defined(slug.current)]{
+  "slug": slug.current
+}`;
+
+// ── Blog queries ──
+export const blogPostsQuery = groq`*[_type == "blogPost"] | order(publishedAt desc){
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  category,
+  tags,
+  author,
+  publishedAt,
+  "coverImageUrl": coverImage.asset->url,
+  "coverImageAlt": coverImage.alt
+}`;
+
+export const blogPostBySlugQuery = groq`*[_type == "blogPost" && slug.current == $slug][0]{
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  content,
+  category,
+  tags,
+  author,
+  publishedAt,
+  seoTitle,
+  seoDescription,
+  "coverImageUrl": coverImage.asset->url,
+  "coverImageAlt": coverImage.alt
+}`;
+
+export const allBlogSlugsQuery = groq`*[_type == "blogPost" && defined(slug.current)]{
+  "slug": slug.current
+}`;
+
+// ── Sitemap queries ──
+export const sitemapServiceSlugsQuery = groq`*[_type == "service" && defined(slug.current)]{
+  "slug": slug.current,
+  _updatedAt
+}`;
+
+export const sitemapBlogSlugsQuery = groq`*[_type == "blogPost" && defined(slug.current)]{
+  "slug": slug.current,
+  publishedAt,
+  _updatedAt
+}`;
+
+export const sitemapProjectSlugsQuery = groq`*[_type == "project" && active == true && defined(slug.current)]{
+  "slug": slug.current,
+  _updatedAt
+}`;
+

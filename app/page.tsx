@@ -22,8 +22,7 @@ const AboutSection = nextDynamic(() => import("./components/AboutSection"), { ss
 const ContactSection = nextDynamic(() => import("./components/ContactSection"), { ssr: true });
 const Footer = nextDynamic(() => import("./components/Footer"), { ssr: true });
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 3600; // ISR: revalidate every hour for better performance & SEO
 
 export default async function Home() {
   let projects = [];

@@ -90,7 +90,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
     { label: "الرئيسية", href: "#home" },
     { label: "الخدمات", href: "#services" },
     { label: "أعمالنا", href: "#projects" },
-    { label: "كيف نعمل", href: "#about" },
+    { label: "المدونة", href: "/blog" },
     { label: "من نحن", href: "/about" },
     { label: "تواصل معنا", href: "#contact" },
   ];

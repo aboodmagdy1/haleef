@@ -29,28 +29,43 @@ export const metadata: Metadata = {
     "Haleef Tech",
     "تطوير برمجيات",
     "شركة برمجة سعودية",
+    "شركة برمجة في المدينة المنورة",
+    "أفضل شركة برمجة سعودية",
     "تصميم مواقع",
+    "تصميم مواقع المدينة المنورة",
+    "شركة تصميم مواقع السعودية",
     "تطبيقات جوال",
     "تطوير تطبيقات",
+    "تصميم تطبيقات السعودية",
+    "برمجة تطبيقات الجوال",
     "متاجر إلكترونية",
     "متجر سلة",
     "متجر زد",
+    "تجهيز متجر سلة",
+    "تصميم متجر زد",
+    "إنشاء متجر إلكتروني",
     "تصميم جرافيك",
     "تصميم واجهات",
     "UI/UX",
     "تصميم هوية بصرية",
+    "تصميم شعارات",
     "حلول رقمية",
     "التحول الرقمي",
+    "التحول الرقمي السعودية",
+    "رؤية 2030 تقنية",
     "software development Saudi Arabia",
-    "mobile app development",
-    "web development",
-    "e-commerce",
-    "Salla store",
-    "Zid store",
-    "graphic design",
+    "mobile app development Saudi Arabia",
+    "web development Madinah",
+    "best software company Saudi Arabia",
+    "e-commerce solutions Saudi",
+    "Salla store setup",
+    "Zid store design",
+    "graphic design Saudi Arabia",
     "UI UX design",
-    "digital solutions",
+    "digital solutions Saudi",
     "المدينة المنورة",
+    "Saudi app developers",
+    "Madinah web development company",
   ],
   authors: [{ name: "حليف تقني — Haleef Tech", url: siteUrl }],
   creator: "حليف تقني — Haleef Tech",
@@ -138,6 +153,9 @@ export default async function RootLayout({
     sameAs: [
       "https://www.instagram.com/haleeftech",
       "https://www.tiktok.com/@haleeftech",
+      "https://www.linkedin.com/company/haleef-tech",
+      "https://x.com/HaleefTech",
+      "https://snapchat.com/t/UWKY3obj",
     ],
     foundingLocation: {
       "@type": "Place",
@@ -229,7 +247,6 @@ export default async function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <head>
-        <link rel="canonical" href={siteUrl} />
         <meta name="geo.region" content="SA" />
         <meta name="geo.placename" content="المدينة المنورة" />
         <meta name="theme-color" content="#0A2463" />
@@ -241,6 +258,58 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: "حليف تقني — Haleef Tech",
+              url: siteUrl,
+              logo: logoUrl || `${siteUrl}/og-image.png`,
+              image: logoUrl || `${siteUrl}/og-image.png`,
+              description:
+                "شركة تطوير برمجيات سعودية متخصصة في تصميم وبرمجة تطبيقات الجوال، المواقع الإلكترونية، المتاجر الإلكترونية، والتصميم الجرافيكي في المدينة المنورة.",
+              telephone: "+966559250966",
+              email: "haleeftech.cs@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "المدينة المنورة",
+                addressRegion: "منطقة المدينة المنورة",
+                addressCountry: "SA",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 24.4672,
+                longitude: 39.6024,
+              },
+              priceRange: "$$",
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+                opens: "09:00",
+                closes: "18:00",
+              },
+              areaServed: [
+                { "@type": "Country", name: "Saudi Arabia" },
+                { "@type": "City", name: "المدينة المنورة" },
+              ],
+              serviceType: [
+                "تطوير تطبيقات الجوال",
+                "تصميم وبرمجة المواقع",
+                "إنشاء المتاجر الإلكترونية",
+                "تصميم الهوية البصرية",
+                "تصميم واجهات المستخدم UI/UX",
+              ],
+              sameAs: [
+                "https://www.instagram.com/haleeftech",
+                "https://www.tiktok.com/@haleeftech",
+                "https://www.linkedin.com/company/haleef-tech",
+                "https://x.com/HaleefTech",
+              ],
+            }),
+          }}
         />
       </head>
       <body className={`${ibmPlexArabic.className} antialiased bg-background text-text-main`}>

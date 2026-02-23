@@ -28,22 +28,46 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "من نحن — تعرّف على حليف تقني | About Haleef Tech",
+  title: "من نحن — تعرّف على حليف تقني | شريكك التقني في المدينة المنورة",
   description:
-    "تعرّف على حليف تقني، شريكك التقني في رحلة التحول الرقمي. نسعى لنقل خبراتنا التقنية العميقة إلى عملائنا ونبني مستقبلاً تقنياً يمكنك الوثوق به في السعودية.",
+    "تعرّف على حليف تقني، شركة برمجة سعودية من المدينة المنورة. شريكك التقني في رحلة التحول الرقمي — تطوير تطبيقات، مواقع، متاجر إلكترونية وتصميم جرافيك بأعلى معايير الجودة.",
+  keywords: [
+    "حليف تقني من نحن",
+    "شركة برمجة المدينة المنورة",
+    "شركة تقنية سعودية",
+    "شريك تقني",
+    "التحول الرقمي السعودية",
+    "about Haleef Tech",
+    "Saudi software company",
+  ],
   alternates: {
     canonical: "https://www.haleeftech.com/about",
   },
   openGraph: {
     title: "من نحن — تعرّف على حليف تقني | About Haleef Tech",
     description:
-      "في حليف تقني نحن لا نبني أنظمة فقط.. نحن نبني مستقبلاً تقنياً يمكنك الوثوق به. شريكك الحقيقي في رحلة النجاح الرقمي.",
+      "في حليف تقني نحن لا نبني أنظمة فقط.. نحن نبني مستقبلاً تقنياً يمكنك الوثوق به. شريكك الحقيقي في رحلة النجاح الرقمي من المدينة المنورة.",
     url: "https://www.haleeftech.com/about",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "حليف تقني — من نحن | About Haleef Tech",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "من نحن — تعرّف على حليف تقني | About Haleef Tech",
+    description:
+      "شركة برمجة سعودية من المدينة المنورة. نبني مستقبلاً تقنياً يمكنك الوثوق به.",
+    images: ["/og-image.png"],
   },
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // ISR: revalidate every hour for better performance & SEO
 
 /* ── Icon map ── */
 const iconMap: Record<string, React.ReactNode> = {
@@ -134,6 +158,72 @@ export default async function AboutPage() {
     client.fetch(footerQuery),
   ]);
 
+  /* ── Structured Data ── */
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "الرئيسية", item: "https://www.haleeftech.com" },
+      { "@type": "ListItem", position: 2, name: "من نحن", item: "https://www.haleeftech.com/about" },
+    ],
+  };
+
+  const aboutJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "من نحن — حليف تقني",
+    description: "تعرّف على حليف تقني، شركة برمجة سعودية من المدينة المنورة متخصصة في التحول الرقمي.",
+    url: "https://www.haleeftech.com/about",
+    mainEntity: {
+      "@type": "Organization",
+      name: "حليف تقني — Haleef Tech",
+      url: "https://www.haleeftech.com",
+      foundingLocation: {
+        "@type": "Place",
+        name: "المدينة المنورة، المملكة العربية السعودية",
+      },
+    },
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "ما هي خدمات حليف تقني؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نقدم خدمات متكاملة تشمل: تطوير تطبيقات الجوال (iOS و Android)، تصميم وبرمجة المواقع الإلكترونية، إنشاء متاجر سلة وزد، تصميم واجهات UI/UX، والهوية البصرية والتصميم الجرافيكي.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "أين يقع مقر حليف تقني؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "مقر حليف تقني في المدينة المنورة، المملكة العربية السعودية. نخدم عملاء في جميع أنحاء المملكة والخليج العربي.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "لماذا أختار حليف تقني؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نتميز بعقلية الشريك وليس المزود. نلتزم بالجودة العالمية، الشفافية الكاملة، الدعم المستمر بعد التسليم، ونقل المعرفة لفريقك. كل مشروع مصمم خصيصاً لاحتياجاتك.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "ما التقنيات التي تستخدمونها؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نستخدم أحدث التقنيات مثل React Native و Flutter لتطبيقات الجوال، Next.js و React لمواقع الويب، ومنصات سلة وزد للمتاجر الإلكترونية. نختار التقنية الأنسب لكل مشروع.",
+        },
+      },
+    ],
+  };
+
   const heroTitle = data?.heroTitle || defaults.heroTitle;
   const heroSubtitle = data?.heroSubtitle || defaults.heroSubtitle;
   const imageUrl = data?.imageUrl || null;
@@ -148,6 +238,18 @@ export default async function AboutPage() {
 
   return (
     <main className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* ── Hero ── */}
       <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden bg-gradient-to-br from-[#0A2463] via-[#0e2d6e] to-[#2a1055]">
         <div className="absolute inset-0 opacity-[0.04]">
@@ -157,6 +259,11 @@ export default async function AboutPage() {
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#8B11AF]/20 rounded-full blur-[120px]" />
 
         <div className="container mx-auto px-4 md:px-8 relative z-10 text-center max-w-4xl">
+          <nav className="text-blue-200/50 text-sm mb-8 font-medium" aria-label="Breadcrumb">
+            <a href="/" className="hover:text-white transition-colors">الرئيسية</a>
+            <span className="mx-2">/</span>
+            <span className="text-white/80">من نحن</span>
+          </nav>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
             {heroTitle}
           </h1>

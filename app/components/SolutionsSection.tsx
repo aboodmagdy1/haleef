@@ -8,7 +8,7 @@ import {
   Palette,
   Smartphone,
   ShoppingBag,
-  ArrowLeft,
+  Rocket,
   Code,
   Globe,
   Monitor,
@@ -18,7 +18,6 @@ import {
   TrendingUp,
   Shield,
   Zap,
-  Rocket,
   Users,
   Heart,
   Star,
@@ -336,12 +335,12 @@ const SolutionsSection = ({ data, introData }: SolutionsSectionProps) => {
                 </div>
                 <div>
                   <CreativeButton
-                    text={intro.ctaText || "احجز استشارتك المجانية"}
-                    icon={<ArrowLeft className="w-5 h-5" />}
-                    variant="secondary"
+                    text="استكشف حلولنا الرقمية"
+                    icon={<Rocket className="w-5 h-5" />}
+                    variant="primary"
                     reverse={true}
                     size="lg"
-                    href={intro.ctaLink || "#contact"}
+                    href="/services"
                     className="w-full md:w-auto"
                   />
                 </div>

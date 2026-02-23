@@ -9,7 +9,8 @@ import contact from "./contact";
 import siteSettings from "./siteSettings";
 import aboutPage from "./aboutPage";
 import solutionsIntro from "./solutionsIntro";
+import blogPost from "./blogPost";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [project, service, hero, about, conflict, footer, contact, siteSettings, aboutPage, solutionsIntro],
+  types: [project, service, hero, about, conflict, footer, contact, siteSettings, aboutPage, solutionsIntro, blogPost],
 };
