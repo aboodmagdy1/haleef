@@ -365,7 +365,7 @@ const ConvergenceSection = () => {
             alt="Saudi Man"
             fill
             className="object-contain object-bottom drop-shadow-2xl"
-            priority
+            loading="lazy"
           />
         </div>
       </div>
@@ -380,7 +380,7 @@ const ConvergenceSection = () => {
             alt="Robot"
             fill
             className="object-contain object-top drop-shadow-2xl"
-            priority
+            loading="lazy"
           />
         </div>
       </div>

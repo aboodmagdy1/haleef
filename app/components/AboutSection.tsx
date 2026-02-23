@@ -180,7 +180,7 @@ const AboutSection = ({ data }: AboutSectionProps) => {
             alt="About Haleef Team"
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
-            priority
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-linear-to-t from-[#0A2463]/60 via-transparent to-transparent opacity-80"></div>
           <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12">

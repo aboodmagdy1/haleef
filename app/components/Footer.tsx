@@ -18,9 +18,11 @@ export interface FooterData {
 const defaultFooterData: FooterData = {
   slogan: ["تصميم.", "برمجة.", "محتوى."],
   navLinks: [
+    { label: "الرئيسية", href: "/" },
     { label: "من نحن", href: "/about" },
     { label: "خدماتنا", href: "#services" },
     { label: "أعمالنا", href: "#projects" },
+    { label: "كيف نعمل", href: "#about" },
     { label: "تواصل معنا", href: "#contact" },
   ],
   location: "المدينة المنورة ، المملكة العربية السعودية - متاح عن بعد",
