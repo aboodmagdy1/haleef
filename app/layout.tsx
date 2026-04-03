@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
+
+
 import FloatingNav from "./components/FloatingNav";
 import WhatsAppButton from "./components/WhatsAppButton";
 import { client } from "@/sanity/lib/client";
@@ -199,8 +201,7 @@ export default async function RootLayout({
         item: {
           "@type": "Service",
           name: "مواقع إلكترونية — Website Development",
-          description:
-            "تصميم وبرمجة مواقع إلكترونية احترافية ومتجاوبة تعكس هويتك وتعزز تواجدك الرقمي.",
+          description: "تصميم وبرمجة مواقع إلكترونية احترافية ومتجاوبة تعكس هويتك وتعزز تواجدك الرقمي.",
           provider: { "@type": "Organization", name: "حليف تقني — Haleef Tech" },
           areaServed: { "@type": "Country", name: "Saudi Arabia" },
         },
@@ -211,8 +212,7 @@ export default async function RootLayout({
         item: {
           "@type": "Service",
           name: "المتاجر الإلكترونية — E-commerce Solutions",
-          description:
-            "إنشاء متاجر إلكترونية متكاملة على منصات سلة وزد مع تصميم احترافي وربط أنظمة الدفع والشحن.",
+          description: "إنشاء متاجر إلكترونية متكاملة على منصات سلة وزد مع تصميم احترافي وربط أنظمة الدفع والشحن.",
           provider: { "@type": "Organization", name: "حليف تقني — Haleef Tech" },
           areaServed: { "@type": "Country", name: "Saudi Arabia" },
         },
@@ -223,8 +223,7 @@ export default async function RootLayout({
         item: {
           "@type": "Service",
           name: "تصميم الواجهات — UI/UX Design",
-          description:
-            "تصميم واجهات مستخدم جذابة وتجربة استخدام سلسة مبنية على دراسة سلوك المستخدمين.",
+          description: "تصميم واجهات مستخدم جذابة وتجربة استخدام سلسة مبنية على دراسة سلوك المستخدمين.",
           provider: { "@type": "Organization", name: "حليف تقني — Haleef Tech" },
           areaServed: { "@type": "Country", name: "Saudi Arabia" },
         },
@@ -235,8 +234,7 @@ export default async function RootLayout({
         item: {
           "@type": "Service",
           name: "التصميم الجرافيكي والهوية البصرية — Graphic Design & Branding",
-          description:
-            "تصميم شعارات وهوية بصرية كاملة وتصاميم سوشيال ميديا تميزك في السوق وتعكس احترافيتك.",
+          description: "تصميم شعارات وهوية بصرية كاملة وتصاميم سوشيال ميديا تميزك في السوق وتعكس احترافيتك.",
           provider: { "@type": "Organization", name: "حليف تقني — Haleef Tech" },
           areaServed: { "@type": "Country", name: "Saudi Arabia" },
         },
@@ -247,18 +245,25 @@ export default async function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18059100047" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-18059100047');
+            `,
+          }}
+        />
         <meta name="geo.region" content="SA" />
+
         <meta name="geo.placename" content="المدينة المنورة" />
         <meta name="theme-color" content="#0A2463" />
         <link rel="manifest" href="/manifest.json" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -318,6 +323,7 @@ export default async function RootLayout({
           <FloatingNav logoUrl={logoUrl} />
           {children}
           <WhatsAppButton phoneNumber={whatsappNumber} />
+
         </LenisProvider>
       </body>
     </html>
