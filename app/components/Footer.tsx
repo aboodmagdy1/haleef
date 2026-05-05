@@ -23,9 +23,9 @@ const defaultFooterData: FooterData = {
     { label: "أعمالنا", href: "#projects" },
     { label: "المدونة", href: "/blog" },
     { label: "من نحن", href: "/about" },
-    { label: "تواصل معنا", href: "#contact" },
+    { label: "تواصل معنا", href: "/contact" },
   ],
-  location: "المدينة المنورة ، المملكة العربية السعودية - متاح عن بعد",
+  location: "المملكة العربية السعودية، المدينة المنورة",
   email: "haleeftech.cs@gmail.com",
   phone: "0559250966",
   crNumber: "7053578816",
@@ -36,6 +36,7 @@ const defaultFooterData: FooterData = {
     { platform: "WhatsApp", href: "#" },
     { platform: "snapchat", href: "https://s.com/t/UWKY3obj" },
     { platform: "TikTok", href: "https://www.tiktok.com/@haleeftech?_r=1&_t=ZS-93pvPRaB4uj" },
+    { platform: "Maroof", href: "https://maroof.sa/businesses/details/370880" },
   ],
 };
 
@@ -75,21 +76,14 @@ const getSocialIcon = (platform: string) => {
           <path d="m24.0116,42.2697c3.8272-.0024,4.9669-1.6066,7.486-2.7237,2.2497-.9976,5.4694.5087,6.1373-2.1616h0c.0865-1.3801,2.513-1.1579,3.8742-2.0996,1.2418-.8591,1.3659-2.2361.0902-2.778-2.8877-1.2269-5.9232-3.9144-6.6578-6.7964-.4582-1.7978,5.2788-2.3506,4.0841-5.7402-.7049-2.0001-3.2379-1.2958-4.616-.8478.9182-7.1086-2.542-13.3923-10.4098-13.3923s-11.328,6.2837-10.4098,13.3923c-1.378-.448-3.911-1.1523-4.616.8478-1.1947,3.3896,4.5424,3.9424,4.0841,5.7402-.7346,2.882-3.77,5.5695-6.6578,6.7964-1.2757.542-1.1516,1.9189.0902,2.778,1.3612.9417,3.7878.7195,3.8742,2.0996h0c.6679,2.6703,3.8876,1.164,6.1373,2.1616,2.5191,1.1171,3.6588,2.7213,7.486,2.7237.0058,0,.0173,0,.0231,0Z" />
         </svg>
       );
-    case "snapshat":
+    case "maroof":
       return (
-        <svg
-          viewBox="0 0 48 48"
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="m24.0116,42.2697c3.8272-.0024,4.9669-1.6066,7.486-2.7237,2.2497-.9976,5.4694.5087,6.1373-2.1616h0c.0865-1.3801,2.513-1.1579,3.8742-2.0996,1.2418-.8591,1.3659-2.2361.0902-2.778-2.8877-1.2269-5.9232-3.9144-6.6578-6.7964-.4582-1.7978,5.2788-2.3506,4.0841-5.7402-.7049-2.0001-3.2379-1.2958-4.616-.8478.9182-7.1086-2.542-13.3923-10.4098-13.3923s-11.328,6.2837-10.4098,13.3923c-1.378-.448-3.911-1.1523-4.616.8478-1.1947,3.3896,4.5424,3.9424,4.0841,5.7402-.7346,2.882-3.77,5.5695-6.6578,6.7964-1.2757.542-1.1516,1.9189.0902,2.778,1.3612.9417,3.7878.7195,3.8742,2.0996h0c.6679,2.6703,3.8876,1.164,6.1373,2.1616,2.5191,1.1171,3.6588,2.7213,7.486,2.7237.0058,0,.0173,0,.0231,0Z" />
+        <svg viewBox="0 0 24 24" className="w-6 h-6">
+          <circle cx="12" cy="12" r="11" fill="#00A65A" />
+          <path d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" fill="#FFD700" />
+          <text x="50%" y="58%" textAnchor="middle" fontSize="5" fontWeight="black" fill="white" style={{ fontFamily: "Arial" }}>M</text>
         </svg>
       );
-
     case "tiktok":
       return (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -176,7 +170,7 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
 
           {/* Nav Menu */}
           <nav className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-slate-500 font-black text-sm md:text-base">
-            {defaultFooterData.navLinks.map((link, i) => {
+            {content.navLinks.map((link, i) => {
               const isHash = link.href.startsWith("#");
 
               if (isHash) {
@@ -204,25 +198,43 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
         {/* Separator */}
         <div className="w-full h-px bg-slate-200/60 my-10" />
 
+        <div className="flex flex-col md:grid md:grid-cols-3 items-start justify-between gap-10">
+          <div className="flex flex-col gap-4">
+            <h4 className="text-[#0A2463] font-black text-lg">معلومات التواصل</h4>
+            <p className="text-slate-500 text-sm font-medium">رقم الجوال: {content.phone}</p>
+            <p className="text-slate-500 text-sm font-medium">البريد: {content.email}</p>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <h4 className="text-[#0A2463] font-black text-lg">التفاصيل القانونية</h4>
+            <p className="text-slate-500 text-sm font-medium">السجل التجاري: {content.crNumber}</p>
+            <p className="text-slate-500 text-sm font-medium">{content.location}</p>
+          </div>
+
+          <div className="flex flex-col items-center md:items-end gap-6">
+            <div className="flex gap-4">
+              {socialLinks.map((social, i) => (
+                <a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#3E92CC] transition-all border border-slate-100"
+                  aria-label={social.platform}
+                >
+                  {getSocialIcon(social.platform)}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="w-full h-px bg-slate-200/60 my-10" />
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[12px] md:text-xs text-slate-400 font-bold">
             © {new Date().getFullYear()} حليف. بكل فخر من المدينة المنورة.
           </p>
-
-          <div className="flex gap-4">
-            {socialLinks.map((social, i) => (
-              <a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#3E92CC] transition-all border border-slate-100"
-                aria-label={social.platform}
-              >
-                {getSocialIcon(social.platform)}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

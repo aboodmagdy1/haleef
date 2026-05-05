@@ -92,7 +92,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
     { label: "أعمالنا", href: "#projects" },
     { label: "المدونة", href: "/blog" },
     { label: "من نحن", href: "/about" },
-    { label: "تواصل معنا", href: "#contact" },
+    { label: "تواصل معنا", href: "/contact" },
   ];
 
   return (
@@ -110,8 +110,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
         {/* Logo (Logo on Right in RTL) */}
         <div className="shrink-0">
           <Link
-            href="#home"
-            onClick={(e: any) => handleScroll(e, "#home")}
+            href="/"
             className=" relative block w-32 md:w-32  h-14"
           >
             {logoUrl ? (
@@ -175,8 +174,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
                 size="lg"
                 variant="primary"
                 className="w-full"
-                href="#contact"
-                onClick={(e: any) => handleScroll(e, "#contact")}
+                href="/contact"
               />
               <p className="text-center text-slate-400 text-xs font-medium">نحول طموحك إلى واقع تقني</p>
             </div>
@@ -219,8 +217,7 @@ export default function FloatingNav({ logoUrl }: { logoUrl?: string | null }) {
             size="sm"
             variant="primary"
             className="py-1.5! px-4! md:py-2! md:px-6! text-xs md:text-sm"
-            href="#contact"
-            onClick={(e: any) => handleScroll(e, "#contact")}
+            href="/contact"
           />
         </div>
       </nav>
