@@ -27,7 +27,7 @@ const defaultFooterData: FooterData = {
   ],
   location: "المملكة العربية السعودية، المدينة المنورة",
   email: "haleeftech.cs@gmail.com",
-  phone: "0559250966",
+  phone: "966559250966+",
   crNumber: "7053578816",
   socialLinks: [
     { platform: "Instagram", href: "https://www.instagram.com/haleeftech?igsh=MTlnZTZuMm1ndTNuaQ%3D%3D&utm_source=qr" },
@@ -78,11 +78,7 @@ const getSocialIcon = (platform: string) => {
       );
     case "maroof":
       return (
-        <svg viewBox="0 0 24 24" className="w-6 h-6">
-          <circle cx="12" cy="12" r="11" fill="#00A65A" />
-          <path d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" fill="#FFD700" />
-          <text x="50%" y="58%" textAnchor="middle" fontSize="5" fontWeight="black" fill="white" style={{ fontFamily: "Arial" }}>M</text>
-        </svg>
+        <img src="/maroof.ico" alt="Maroof" className="w-6 h-6 object-contain" />
       );
     case "tiktok":
       return (
@@ -91,7 +87,7 @@ const getSocialIcon = (platform: string) => {
         </svg>
       );
     default:
-      return null;
+      return <MessageCircle className="w-5 h-5" />;
   }
 };
 
@@ -104,10 +100,17 @@ const ensuredPlatforms = [
   { platform: "Linkedin", href: "#" },
   { platform: "X", href: "#" },
   { platform: "WhatsApp", href: "#" },
+  { platform: "Maroof", href: "https://maroof.sa/businesses/details/370880" },
 ];
 
 const Footer = ({ data, logoUrl }: FooterProps) => {
-  const content = data || defaultFooterData;
+  // Merge Sanity data with defaults to prevent crashes
+  const content = {
+    ...defaultFooterData,
+    ...data,
+    navLinks: data?.navLinks || defaultFooterData.navLinks,
+    socialLinks: data?.socialLinks || defaultFooterData.socialLinks,
+  };
 
   const baseSocials = content.socialLinks || [];
   const socialLinks = [
