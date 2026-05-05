@@ -204,8 +204,18 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
         <div className="flex flex-col md:grid md:grid-cols-3 items-start justify-between gap-10">
           <div className="flex flex-col gap-4">
             <h4 className="text-[#0A2463] font-black text-lg">معلومات التواصل</h4>
-            <p className="text-slate-500 text-sm font-medium">رقم الجوال: {content.phone}</p>
-            <p className="text-slate-500 text-sm font-medium">البريد: {content.email}</p>
+            <p className="text-slate-500 text-sm font-medium">
+              رقم الجوال:{" "}
+              <a href={`tel:${content.phone.replace(/[^\d+]/g, "")}`} className="hover:text-[#3E92CC] transition-colors">
+                {content.phone}
+              </a>
+            </p>
+            <p className="text-slate-500 text-sm font-medium">
+              البريد:{" "}
+              <a href={`mailto:${content.email}`} className="hover:text-[#3E92CC] transition-colors">
+                {content.email}
+              </a>
+            </p>
           </div>
 
           <div className="flex flex-col gap-4">
