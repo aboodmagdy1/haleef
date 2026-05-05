@@ -34,7 +34,7 @@ const defaultFooterData: FooterData = {
     { platform: "Instagram", href: "https://www.instagram.com/haleeftech?igsh=MTlnZTZuMm1ndTNuaQ%3D%3D&utm_source=qr" },
     { platform: "Linkedin", href: "#" },
     { platform: "X", href: "#" },
-    { platform: "WhatsApp", href: "#" },
+    { platform: "WhatsApp", href: "https://wa.me/966559250966" },
     { platform: "snapchat", href: "https://s.com/t/UWKY3obj" },
     { platform: "TikTok", href: "https://www.tiktok.com/@haleeftech?_r=1&_t=ZS-93pvPRaB4uj" },
   ],
@@ -114,7 +114,7 @@ const ensuredPlatforms = [
   { platform: "Maroof", href: "https://maroof.sa/businesses/details/370880" },
   { platform: "Linkedin", href: "#" },
   { platform: "X", href: "#" },
-  { platform: "WhatsApp", href: "#" },
+  { platform: "WhatsApp", href: "https://wa.me/966559250966" },
 ];
 
 const Footer = ({ data, logoUrl }: FooterProps) => {
