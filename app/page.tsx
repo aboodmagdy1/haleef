@@ -71,7 +71,7 @@ export default async function Home() {
       <SolutionsSection data={services} introData={solutionsIntro} />
       <ProjectsSection data={projects} />
       <AboutSection data={about} />
-      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
+      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} whatsappNumber={siteSettings?.whatsappNumber} />
       <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
     </main>
   );

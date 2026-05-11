@@ -38,9 +38,10 @@ export interface ContactData {
 interface ContactSectionProps {
   data?: ContactData;
   logoUrl?: string | null;
+  whatsappNumber?: string;
 }
 
-const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
+const ContactSection = ({ data, logoUrl, whatsappNumber }: ContactSectionProps) => {
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLDivElement>(null);
   const infoRef = React.useRef<HTMLDivElement>(null);
@@ -50,6 +51,7 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
     data?.description || "سواء كان لديك مشروع جاهز للتنفيذ أو مجرد فكرة تود مناقشتها، خبراء حليف مستعدون لمساعدتك.";
   const displayEmail = data?.displayEmail || "haleeftech.cs@gmail.com";
   const receivingEmail = data?.receivingEmail || "haleeftech.cs@gmail.com";
+  const displayWhatsApp = whatsappNumber || "+966559250966";
   const [isSuccess, setIsSuccess] = React.useState(false);
 
   const form = useForm<FormValues>({
@@ -76,6 +78,16 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         toast.info("تمت المحاكاة: الإعدادات غير مكتملة بعد", { id: toastId });
       } else {
+        const fullMessage = `
+الاسم: ${formData.firstName} ${formData.lastName}
+البريد الإلكتروني: ${formData.email}
+رقم الهاتف: ${formData.phone}
+الشركة: ${formData.company || "N/A"}
+
+الرسالة:
+${formData.message}
+        `;
+
         await emailjs.send(
           serviceId,
           templateId,
@@ -85,7 +97,7 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
             user_phone: formData.phone,
             phone: formData.phone,
             company: formData.company || "N/A",
-            message: formData.message,
+            message: fullMessage,
             to_email: receivingEmail,
             reply_to: formData.email,
           },
@@ -194,19 +206,21 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
               </p>
             </div>
 
-            {/* Email Action */}
+            {/* WhatsApp Action */}
             <a
-              href={`mailto:${displayEmail}`}
-              className="group bg-slate-50/80 border border-slate-100 p-6 rounded-3xl flex items-center gap-4 hover:border-[#3E92CC]/30 hover:bg-white transition-all cursor-pointer shadow-md hover:shadow-xl"
+              href={`https://wa.me/${displayWhatsApp.replace(/\s+/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-50/80 border border-slate-100 p-6 rounded-3xl flex items-center gap-4 hover:border-[#25D366]/30 hover:bg-white transition-all cursor-pointer shadow-md hover:shadow-xl"
             >
-              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#3E92CC] group-hover:bg-[#3E92CC] group-hover:text-white transition-all shadow-sm group-hover:shadow-lg">
-                <Mail className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#25D366] group-hover:bg-[#25D366] transition-all duration-300 shadow-sm group-hover:shadow-lg">
+                <MessageCircle className="w-6 h-6  transition-colors duration-300" />
               </div>
               <div>
-                <h4 className="font-bold text-[#0A2463] mb-1 group-hover:text-[#3E92CC] transition-colors">
-                  راسلنا عبر البريد
+                <h4 className="font-bold text-[#0A2463] mb-1 group-hover:text-[#25D366] transition-colors">
+                  تواصل معنا عبر الواتساب
                 </h4>
-                <p className="text-slate-500 text-sm font-medium">{displayEmail}</p>
+                <p className="text-slate-500 text-sm font-medium">{displayWhatsApp}</p>
               </div>
             </a>
 
@@ -295,7 +309,7 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
                         <FormItem>
                           <FormLabel className="text-slate-900 font-bold mb-2 block">رقم الهاتف</FormLabel>
                           <FormControl>
-                            <Input
+                            <Input dir="ltr"
                               placeholder="+966 50 000 0000"
                               {...field}
                               className="bg-slate-50/50 border-slate-100 text-slate-900 placeholder:text-slate-400 focus-visible:ring-[#3E92CC] focus-visible:bg-white h-14 rounded-2xl transition-all"

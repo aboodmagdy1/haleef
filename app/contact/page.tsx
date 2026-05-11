@@ -28,7 +28,7 @@ export default async function ContactPage() {
 
   return (
     <main className="min-h-screen pt-20">
-      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} />
+      <ContactSection data={contact} logoUrl={siteSettings?.logoUrl} whatsappNumber={siteSettings?.whatsappNumber} />
       <Footer data={footer} logoUrl={siteSettings?.logoUrl} />
     </main>
   );
