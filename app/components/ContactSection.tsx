@@ -218,7 +218,7 @@ ${formData.message}
               </div>
               <div>
                 <h4 className="font-bold text-[#0A2463] mb-1 group-hover:text-[#25D366] transition-colors">
-                  تواصل معنا عبر الواتساب
+                  تواصل معنا عبر الرقم 
                 </h4>
                 <p className="text-slate-500 text-sm font-medium">{displayWhatsApp}</p>
               </div>
