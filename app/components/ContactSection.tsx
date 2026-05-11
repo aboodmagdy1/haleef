@@ -21,6 +21,7 @@ const formSchema = z.object({
   firstName: z.string().min(2, { message: "الاسم الأول مطلوب" }),
   lastName: z.string().min(2, { message: "الاسم الأخير مطلوب" }),
   email: z.string().email({ message: "البريد الإلكتروني غير صحيح" }),
+  phone: z.string().min(8, { message: "رقم الهاتف مطلوب" }),
   company: z.string().optional(),
   message: z.string().min(10, { message: "الرسالة يجب أن تكون 10 أحرف على الأقل" }),
 });
@@ -57,6 +58,7 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
       firstName: "",
       lastName: "",
       email: "",
+      phone: "",
       company: "",
       message: "",
     },
@@ -80,9 +82,12 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
           {
             from_name: `${formData.firstName} ${formData.lastName}`,
             from_email: formData.email,
+            user_phone: formData.phone,
+            phone: formData.phone,
             company: formData.company || "N/A",
             message: formData.message,
             to_email: receivingEmail,
+            reply_to: formData.email,
           },
           publicKey,
         );
@@ -275,6 +280,23 @@ const ContactSection = ({ data, logoUrl }: ContactSectionProps) => {
                           <FormControl>
                             <Input
                               placeholder="name@example.com"
+                              {...field}
+                              className="bg-slate-50/50 border-slate-100 text-slate-900 placeholder:text-slate-400 focus-visible:ring-[#3E92CC] focus-visible:bg-white h-14 rounded-2xl transition-all"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-slate-900 font-bold mb-2 block">رقم الهاتف</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="+966 50 000 0000"
                               {...field}
                               className="bg-slate-50/50 border-slate-100 text-slate-900 placeholder:text-slate-400 focus-visible:ring-[#3E92CC] focus-visible:bg-white h-14 rounded-2xl transition-all"
                             />
