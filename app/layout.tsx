@@ -125,9 +125,7 @@ export default async function RootLayout({
   try {
     const settings = await client.fetch(siteSettingsQuery);
     logoUrl = settings?.logoUrl || null;
-    if (settings?.whatsappNumber) {
-      whatsappNumber = settings.whatsappNumber;
-    }
+    whatsappNumber = "0559250966";
   } catch (e) {
     console.error("Failed to fetch site settings:", e);
   }

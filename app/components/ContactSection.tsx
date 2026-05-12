@@ -51,7 +51,7 @@ const ContactSection = ({ data, logoUrl, whatsappNumber }: ContactSectionProps) 
     data?.description || "سواء كان لديك مشروع جاهز للتنفيذ أو مجرد فكرة تود مناقشتها، خبراء حليف مستعدون لمساعدتك.";
   const displayEmail = data?.displayEmail || "haleeftech.cs@gmail.com";
   const receivingEmail = data?.receivingEmail || "haleeftech.cs@gmail.com";
-  const displayWhatsApp = whatsappNumber || "0559250966";
+  const displayWhatsApp = "0559250966";
   const [isSuccess, setIsSuccess] = React.useState(false);
 
   const form = useForm<FormValues>({
@@ -310,7 +310,7 @@ ${formData.message}
                           <FormLabel className="text-slate-900 font-bold mb-2 block">رقم الهاتف</FormLabel>
                           <FormControl>
                             <Input dir="ltr"
-                              placeholder="+966 50 000 0000"
+                              placeholder="050 000 0000"
                               {...field}
                               className="bg-slate-50/50 border-slate-100 text-slate-900 placeholder:text-slate-400 focus-visible:ring-[#3E92CC] focus-visible:bg-white h-14 rounded-2xl transition-all"
                             />
