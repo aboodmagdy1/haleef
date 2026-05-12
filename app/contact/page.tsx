@@ -4,7 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { contactQuery, siteSettingsQuery, footerQuery } from "@/sanity/lib/queries";
 import { projectId } from "@/sanity/env";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export default async function ContactPage() {
   let contact = null;

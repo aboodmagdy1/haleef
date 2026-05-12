@@ -221,8 +221,12 @@ const Footer = ({ data, logoUrl }: FooterProps) => {
             <h4 className="text-[#0A2463] font-black text-lg">معلومات التواصل</h4>
             <p className="text-slate-500 text-sm font-medium">
               رقم الجوال:{" "}
-              <a href="tel:0559250966" className="hover:text-[#3E92CC] transition-colors">
-                0559250966
+              <a href={`tel:${content.phone.replace(/[^\d+]/g, "")}`} className="hover:text-[#3E92CC] transition-colors">
+                {(() => {
+                  const clean = content.phone.replace(/\D/g, "");
+                  const formatted = clean.startsWith("05") ? "966" + clean.substring(1) : clean.startsWith("5") ? "966" + clean : clean;
+                  return formatted.startsWith("966") ? "+" + formatted : formatted;
+                })()}
               </a>
             </p>
             <p className="text-slate-500 text-sm font-medium">
