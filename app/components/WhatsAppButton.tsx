@@ -46,14 +46,16 @@ export default function WhatsAppButton({ phoneNumber }: WhatsAppButtonProps) {
   );
 
   const handleClick = () => {
-    const url = `https://wa.me/${phoneNumber.replace(/\s+/g, "")}`;
+    const cleanNumber = phoneNumber.replace(/\D/g, "");
+    const finalNumber = cleanNumber.startsWith("05") ? "966" + cleanNumber.substring(1) : cleanNumber;
+    const url = `https://wa.me/${finalNumber}`;
     window.open(url, "_blank");
   };
 
   return (
     <a
       ref={buttonRef}
-      href={`https://wa.me/${phoneNumber.replace(/\s+/g, "")}`}
+      href={`https://wa.me/${phoneNumber.replace(/\D/g, "").startsWith("05") ? "966" + phoneNumber.replace(/\D/g, "").substring(1) : phoneNumber.replace(/\D/g, "")}`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-100 flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-[#25D366] text-white rounded-full shadow-2xl shadow-green-500/40 hover:bg-[#20ba5a] transition-colors group"

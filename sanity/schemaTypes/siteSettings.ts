@@ -18,7 +18,7 @@ export default defineType({
       name: "whatsappNumber",
       title: "WhatsApp Number",
       type: "string",
-      description: "رقم الواتساب مع كود الدولة (مثال: +966559250966)",
+      description: "رقم الواتساب (مثال: 0559250966)",
     }),
   ],
 });

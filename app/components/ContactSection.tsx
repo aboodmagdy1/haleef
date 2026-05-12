@@ -51,7 +51,7 @@ const ContactSection = ({ data, logoUrl, whatsappNumber }: ContactSectionProps) 
     data?.description || "سواء كان لديك مشروع جاهز للتنفيذ أو مجرد فكرة تود مناقشتها، خبراء حليف مستعدون لمساعدتك.";
   const displayEmail = data?.displayEmail || "haleeftech.cs@gmail.com";
   const receivingEmail = data?.receivingEmail || "haleeftech.cs@gmail.com";
-  const displayWhatsApp = whatsappNumber || "+966559250966";
+  const displayWhatsApp = whatsappNumber || "0559250966";
   const [isSuccess, setIsSuccess] = React.useState(false);
 
   const form = useForm<FormValues>({
@@ -208,7 +208,7 @@ ${formData.message}
 
             {/* WhatsApp Action */}
             <a
-              href={`https://wa.me/${displayWhatsApp.replace(/\s+/g, "")}`}
+              href={`https://wa.me/${displayWhatsApp.replace(/\D/g, "").startsWith("05") ? "966" + displayWhatsApp.replace(/\D/g, "").substring(1) : displayWhatsApp.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-slate-50/80 border border-slate-100 p-6 rounded-3xl flex items-center gap-4 hover:border-[#25D366]/30 hover:bg-white transition-all cursor-pointer shadow-md hover:shadow-xl"

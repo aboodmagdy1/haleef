@@ -27,7 +27,7 @@ const defaultFooterData: FooterData = {
   ],
   location: "المملكة العربية السعودية، المدينة المنورة",
   email: "haleeftech.cs@gmail.com",
-  phone: "966559250966+",
+  phone: "0559250966",
   crNumber: "7053578816",
   socialLinks: [
     { platform: "Maroof", href: "https://maroof.sa/businesses/details/370880" },

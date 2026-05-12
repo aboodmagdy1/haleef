@@ -121,7 +121,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let logoUrl: string | null = null;
-  let whatsappNumber = "+966559250966";
+  let whatsappNumber = "0559250966";
   try {
     const settings = await client.fetch(siteSettingsQuery);
     logoUrl = settings?.logoUrl || null;
@@ -147,7 +147,7 @@ export default async function RootLayout({
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+966559250966",
+      telephone: "0559250966",
       contactType: "customer service",
       email: "haleeftech.cs@gmail.com",
       availableLanguage: ["Arabic", "English"],
@@ -286,7 +286,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               image: logoUrl || `${siteUrl}/og-image.png`,
               description:
                 "شركة تطوير برمجيات سعودية متخصصة في تصميم وبرمجة تطبيقات الجوال، المواقع الإلكترونية، المتاجر الإلكترونية، والتصميم الجرافيكي في المدينة المنورة.",
-              telephone: "+966559250966",
+              telephone: "0559250966",
               email: "haleeftech.cs@gmail.com",
               address: {
                 "@type": "PostalAddress",
